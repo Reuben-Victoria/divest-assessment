@@ -1,6 +1,10 @@
 @use "sass:map";
-@use './variables' as *;
+@use "./variables" as *;
 
 @function get-color($key) {
   @return map.get($colors-map, $key);
+}
+
+@function get-breakpoint($key) {
+  @return map-get($breakpoints, $key);
 }

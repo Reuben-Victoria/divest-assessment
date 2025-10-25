@@ -1,14 +1,32 @@
 import StatusBadge from "./StatusBadge";
 import type { Invoice } from "@/types";
 
-const InvoiceCard = ({ invoice }: { invoice: Invoice }) => {
+interface InvoiceCardProps {
+  invoice: Invoice;
+  onClick?: (invoice: Invoice) => void;
+}
+
+const InvoiceCard: React.FC<InvoiceCardProps> = ({ invoice, onClick }) => {
+  const handleClick = () => {
+    if (onClick) {
+      onClick(invoice);
+    }
+  };
+
   return (
-    <div className="invoice-card">
-      <div className="invoice-card__id">#{invoice.id}</div>
+    <div className="invoice-card" onClick={handleClick}>
+      <div className="invoice-card__id">
+        <span className="invoice-card__hash">#</span>
+        {invoice.id}
+      </div>
       <div className="invoice-card__date">Due {invoice.dueDate}</div>
       <div className="invoice-card__client">{invoice.clientName}</div>
       <div className="invoice-card__amount">
-        £ {invoice.amount.toLocaleString("en-GB", { minimumFractionDigits: 2 })}
+        £{" "}
+        {invoice.amount.toLocaleString("en-GB", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}
       </div>
       <div className="invoice-card__status">
         <StatusBadge status={invoice.status} />

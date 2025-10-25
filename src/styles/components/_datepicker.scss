@@ -161,17 +161,17 @@
   --text-secondary: #{get-color("07")};
 
   --icon-color: #7e88c3;
-  --icon-hover: #7c5dfa;
+  --icon-hover: #{get-color('01')};
 
   --input-background: #ffffff;
   --calendar-background: #ffffff;
 
   --border-default: #{get-color("05")};
-  --border-hover: #7c5dfa;
-  --border-active: #7c5dfa;
+  --border-hover: #{get-color('01')};
+  --border-active: #{get-color('01')};
 
   --day-hover: #f9fafe;
-  --day-selected: #7c5dfa;
+  --day-selected: #{get-color('01')};
   --day-selected-text: #ffffff;
 
   --calendar-shadow: 0px 10px 20px rgba(72, 84, 159, 0.25);
