@@ -1,0 +1,95 @@
+@use "../../styles/based/variables" as *;
+@use "../../styles/based/functions" as *;
+
+.invoices-page {
+  min-height: 100vh;
+  background-color: var(--page-background);
+  padding-left: 103px;
+
+  &__content {
+    padding: 72px 48px;
+    max-width: 730px;
+    margin: 0 auto;
+  }
+
+  &__container {
+    width: 100%;
+  }
+}
+
+.invoices-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 65px;
+
+  &__left {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__title {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -1px;
+  }
+
+  &__subtitle {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+}
+
+.invoices-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+
+:root {
+  --page-background: #f8f8fb;
+  --text-primary: #{get-color("08")};
+  --text-secondary: #{get-color("07")};
+}
+
+// Dark Mode
+[data-theme="dark"] {
+  --page-background: #141625;
+  --text-primary: #ffffff;
+  --text-secondary: #{get-color("05")};
+}
+
+@media (max-width: 768px) {
+  .invoices-page {
+    padding-left: 80px;
+
+    &__content {
+      padding: 40px 24px;
+    }
+  }
+
+  .invoices-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+    margin-bottom: 32px;
+
+    &__right {
+      width: 100%;
+      justify-content: space-between;
+      gap: 18px;
+    }
+  }
+}

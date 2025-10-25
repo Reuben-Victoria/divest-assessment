@@ -3,6 +3,7 @@ import { League_Spartan } from "next/font/google";
 import "./globals.css";
 import "../styles/_index.scss";
 import { ThemeProvider } from "@/context/ThemeContext";
+import DashboardLayout from "@/layout/DashboardLayout";
 
 const leagueSpartan = League_Spartan({
   variable: "--font-league-spartan",
@@ -22,7 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${leagueSpartan.variable} antialiased`}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <DashboardLayout> {children}</DashboardLayout>
+        </ThemeProvider>
       </body>
     </html>
   );
