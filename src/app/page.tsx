@@ -1,10 +1,11 @@
-import Button from "@/components/shared/Button";
-import DatePicker from "@/components/shared/DatePicker";
-import Dropdown from "@/components/shared/Dropdown";
-import FilterCheckbox from "@/components/shared/FilterCheckbox";
-import Sidebar from "@/components/shared/Sidebar";
-import StatusBadge from "@/components/shared/StatusBadge";
-import TextInput from "@/components/shared/TextInput";
+import Button from "@/components/Button";
+import DatePicker from "@/components/DatePicker";
+import Dropdown from "@/components/Dropdown";
+import FilterCheckbox from "@/components/FilterCheckbox";
+import InvoiceCard from "@/components/InvoiceCard";
+import Sidebar from "@/components/Sidebar";
+import StatusBadge from "@/components/StatusBadge";
+import TextInput from "@/components/TextInput";
 import Image from "next/image";
 
 export default function Home() {
@@ -14,10 +15,11 @@ export default function Home() {
       <Button variant="ghost">Home</Button>
       <TextInput label="Username" placeholder="Enter your username" />
       <Dropdown />
-      <DatePicker/>
+      <DatePicker />
       <FilterCheckbox />
 
       <StatusBadge status="paid" />
+      <InvoiceCard invoice={}/>
     </div>
   );
 }
