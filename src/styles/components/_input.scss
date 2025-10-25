@@ -1,5 +1,7 @@
-// TextField Styles
-.textfield {
+@use "../based/variables" as *;
+@use "../based/functions" as *;
+
+.textinput {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -11,19 +13,19 @@
 
   &__label {
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 500;
     color: var(--text-secondary);
     margin-bottom: 0;
   }
-
 
   &__input {
     width: 100%;
     padding: 14px 16px;
     font-size: 16px;
+    height: 18px;
     font-weight: 600;
     font-family: inherit;
-    border-radius: 8px;
+    border-radius: 4px;
     border: 1px solid var(--border-default);
     background-color: var(--input-background);
     color: var(--text-primary);
@@ -76,34 +78,33 @@
   }
 }
 
-// Light Mode Variables
 :root {
-  --text-primary: #000000;
-  --text-secondary: #8e92bc;
+  --text-primary: #{get-color("08")};
+  --text-secondary: #{get-color("07")};
   --text-placeholder: #a0a0a0;
-  --text-error: #ef4444;
+  --text-error: #{get-color("09")};
 
   --input-background: #ffffff;
   --input-background-filled: #f8f9fc;
 
-  --border-default: #e5e7eb;
-  --border-active: #6366f1;
-  --border-error: #ef4444;
+  --border-default: #{get-color("05")};
+  --border-active: #{get-color("01")};
+  --border-error: #{get-color("09")};
 }
 
 // Dark Mode Variables
 [data-theme="dark"] {
   --text-primary: #ffffff;
-  --text-secondary: #8e92bc;
+  --text-secondary: #{get-color("05")};
   --text-placeholder: #6b7280;
-  --text-error: #ef4444;
+  --text-error: #{get-color("09")};
 
-  --input-background: #1e2139;
+  --input-background: #{get-color("03")};
   --input-background-filled: #252946;
 
-  --border-default: #2d3154;
-  --border-active: #7c3aed;
-  --border-error: #ef4444;
+  --border-default: #{get-color("04")};
+  --border-active: #{get-color("01")};
+  --border-error: #{get-color("09")};
 }
 
 @media (prefers-color-scheme: dark) {
@@ -111,13 +112,11 @@
     --text-primary: #ffffff;
     --text-secondary: #8e92bc;
     --text-placeholder: #6b7280;
-    --text-error: #ef4444;
-
+    --text-error: #{get-color("10")};
     --input-background: #1e2139;
     --input-background-filled: #252946;
-
-    --border-default: #2d3154;
-    --border-active: #7c3aed;
-    --border-error: #ef4444;
+    --border-default: #{get-color("04")};
+    --border-active: #{get-color("05")};
+    --border-error: #{get-color("10")};
   }
 }

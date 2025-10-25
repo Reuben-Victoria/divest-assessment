@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from "react";
 
 interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -37,7 +38,7 @@ const TextInput: React.FC<TextInputProps> = ({
 
   return (
     <div className={containerClass}>
-      {label && <label className="textinput__label">{label}</label>}
+      {label && <label className="textinput__label body-text-v">{label}</label>}
       <input
         className={inputClass}
         onFocus={() => setIsFocused(true)}

@@ -1,0 +1,224 @@
+@use "../based/variables" as *;
+@use "../based/functions" as *;
+
+.datepicker {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 270px;
+  position: relative;
+
+  &--fullWidth {
+    width: 100%;
+  }
+
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &__label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 0;
+  }
+
+  &__input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 16px 20px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: inherit;
+    border-radius: 4px;
+    border: 1px solid var(--border-default);
+    background-color: var(--input-background);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+    text-align: left;
+
+    &:hover:not(:disabled) {
+      border-color: var(--border-hover);
+    }
+
+    &--active {
+      border-color: var(--border-active);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+
+    &-text {
+      flex: 1;
+    }
+
+    &-icon {
+      color: var(--icon-color);
+      margin-left: 12px;
+    }
+  }
+
+  &__calendar {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    background-color: var(--calendar-background);
+    border-radius: 8px;
+    box-shadow: var(--calendar-shadow);
+    padding: 24px;
+    z-index: 100;
+    animation: calendarFadeIn 0.2s ease;
+    min-width: 280px;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+
+  &__month {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    color: var(--icon-color);
+    cursor: pointer;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: var(--icon-hover);
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+  }
+
+  &__day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 700;
+    font-family: inherit;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover:not(&--selected):not(&--empty) {
+      background-color: var(--day-hover);
+    }
+
+    &--selected {
+      background-color: var(--day-selected);
+      color: var(--day-selected-text);
+    }
+
+    &--empty {
+      cursor: default;
+    }
+  }
+}
+
+@keyframes calendarFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Light Mode Variables
+:root {
+  --text-primary: #{get-color("08")};
+  --text-secondary: #{get-color("07")};
+
+  --icon-color: #7e88c3;
+  --icon-hover: #7c5dfa;
+
+  --input-background: #ffffff;
+  --calendar-background: #ffffff;
+
+  --border-default: #{get-color("05")};
+  --border-hover: #7c5dfa;
+  --border-active: #7c5dfa;
+
+  --day-hover: #f9fafe;
+  --day-selected: #7c5dfa;
+  --day-selected-text: #ffffff;
+
+  --calendar-shadow: 0px 10px 20px rgba(72, 84, 159, 0.25);
+}
+
+// Dark Mode Variables
+[data-theme="dark"] {
+  --text-primary: #ffffff;
+  --text-secondary: #{get-color("05")};
+
+  --icon-color: #7e88c3;
+  --icon-hover: #9277ff;
+
+  --input-background: #{get-color("03")};
+  --calendar-background: #{get-color("04")};
+
+  --border-default: #{get-color("04")};
+  --border-hover: #{get-color("04")};
+  --border-active: #{get-color("04")};
+
+  --day-hover: #{get-color("03")};
+  --day-selected: #7c5dfa;
+  --day-selected-text: #ffffff;
+
+  --calendar-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+// Prefers Dark Mode
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --text-primary: #ffffff;
+    --text-secondary: #dfe3fa;
+
+    --icon-color: #7e88c3;
+    --icon-hover: #9277ff;
+
+    --input-background: #252945;
+    --calendar-background: #252945;
+
+    --border-default: #252945;
+    --border-hover: #252945;
+    --border-active: #252945;
+
+    --day-hover: #1e2139;
+    --day-selected: #7c5dfa;
+    --day-selected-text: #ffffff;
+
+    --calendar-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
+  }
+}

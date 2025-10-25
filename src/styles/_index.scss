@@ -1,7 +1,11 @@
 // abstracts
 @forward "based/variables";
 @forward "based/mixins";
+@forward "based/typography";
 @forward "based/functions";
 
 // components
 @forward "components/button";
+@forward "components/input";
+@forward "components/dropdown";
+@forward "components/datepicker";

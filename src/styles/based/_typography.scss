@@ -1,15 +1,10 @@
-
+@use "./mixins" as *;
 .heading-l {
   font-style: normal;
   font-weight: 700;
   font-size: 2.25rem;
   line-height: 2.0625rem;
   letter-spacing: -0.0625rem;
-  // @include screenMax("mobile") {
-  //   font-size: 36px;
-  //   line-height: 100%;
-  //   font-weight: 600;
-  // }
 }
 
 .heading-m {
@@ -18,18 +13,13 @@
   font-size: 1.5rem;
   line-height: 1.375rem;
   letter-spacing: -0.0469rem;
-  // @include screenMax("mobile") {
-  //   font-size: 36px;
-  //   line-height: 100%;
-  //   font-weight: 600;
-  // }
 }
 
 .heading-s {
   @include heading-s(1.5rem);
 }
 
-.heading-s-v{
+.heading-s-v {
   @include heading-s(0.9375rem);
 }
 
