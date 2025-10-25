@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import { Button, InvoiceCard, FilterCheckbox } from "@/components";
 import type { Invoice } from "@/types";
@@ -71,10 +71,9 @@ const InvoicesPage = () => {
       );
     }
   }, [filters]);
-
-  const handleFilterChange = (selectedFilters: string[]) => {
+  const handleFilterChange = useCallback((selectedFilters: string[]) => {
     setFilters(selectedFilters);
-  };
+  }, []);
 
   const handleNewInvoice = () => {
     console.log("New invoice clicked");

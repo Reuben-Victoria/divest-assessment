@@ -15,7 +15,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   onThemeToggle,
 }) => {
   const [theme, setTheme] = useState<"light" | "dark">("light");
-
+ 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
@@ -38,7 +38,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             "https://res.cloudinary.com/dq9rackyr/image/upload/v1761387393/Group_9_rglr3f.png"
           }
           className=""
-          alt="Logo"
+          alt="Logo"         
         />
       </div>
 

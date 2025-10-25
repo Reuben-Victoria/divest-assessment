@@ -1,0 +1,59 @@
+@use "../../styles/based/variables" as *;
+@use "../../styles/based/functions" as *;
+@use "../../styles/based/mixins" as *;
+
+// Layout container
+.layout {
+  display: flex;
+  min-height: 100vh;
+  transition: background 0.3s ease;
+
+  &__content {
+    flex: 1;
+    display: flex;
+    padding-left: 103px;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  &__container {
+    flex: 1;
+    padding: 2rem 0;
+    margin: 0 auto;
+    overflow-y: auto;
+    max-width: 730px;
+  }
+}
+
+@include tablet {
+  .layout {
+    flex-direction: column;
+
+    &__content {
+      flex: 1;
+      display: flex;
+      padding-top: 102px;
+      padding-left: 0px;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    &__container {
+      padding: 1.5rem 3rem;
+      margin: 0 0;
+    }
+  }
+}
+
+@include mobile {
+  .layout {
+    &__container {
+      padding: 1.5rem 24px;
+      margin: 0 0;
+    }
+
+    &__content {
+      padding-top: 88px;
+    }
+  }
+}

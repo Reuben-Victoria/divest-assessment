@@ -2,21 +2,20 @@
 @use "../../styles/based/functions" as *;
 
 .invoices-page {
-  min-height: 100vh;
-  background-color: var(--page-background);
-  padding-left: 103px;
+//   min-height: 100vh;
+//   background-color: var(--page-background);
+//   padding-left: 103px;
 
-  &__content {
-    padding: 72px 48px;
-    max-width: 730px;
-    margin: 0 auto;
-  }
+//   &__content {
+//     padding: 72px 48px;
+//     max-width: 730px;
+//     margin: 0 auto;
+//   }
 
   &__container {
     width: 100%;
   }
 }
-
 .invoices-header {
   display: flex;
   justify-content: space-between;
@@ -56,7 +55,6 @@
   flex-direction: column;
   gap: 16px;
 }
-
 
 :root {
   --page-background: #f8f8fb;

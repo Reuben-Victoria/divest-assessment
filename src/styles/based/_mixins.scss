@@ -1,3 +1,5 @@
+@use "./variables" as *;
+
 @mixin heading-s($line-height) {
   font-weight: 700;
   font-size: 0.9375rem;
@@ -6,8 +8,20 @@
 }
 
 @mixin body-text($line-height, $letter-spacing) {
-  font-weight: 500; 
+  font-weight: 500;
   font-size: 0.8125rem;
   line-height: $line-height;
   letter-spacing: $letter-spacing;
+}
+
+@mixin mobile {
+  @media (max-width: #{map-get($breakpoints, "mobile")}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: #{map-get($breakpoints, "tablet")}) {
+    @content;
+  }
 }
