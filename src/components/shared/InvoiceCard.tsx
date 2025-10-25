@@ -29,7 +29,7 @@ const InvoiceCard: React.FC<InvoiceCardProps> = ({ invoice, onClick }) => {
         })}
       </div>
       <div className="invoice-card__status">
-        <StatusBadge status={invoice.status} />
+        <StatusBadge  status={invoice.status} />
       </div>
       <div className="invoice-card__arrow">
         <svg width="7" height="10" viewBox="0 0 7 10" fill="none">

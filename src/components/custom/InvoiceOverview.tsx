@@ -83,7 +83,6 @@ const InvoicesPage = () => {
 
   const handleInvoiceClick = (invoice: Invoice) => {
     console.log("Invoice clicked:", invoice);
-    // Add your navigation logic here
   };
 
   const newInvoiceIcon = (

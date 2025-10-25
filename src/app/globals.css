@@ -1,16 +1,19 @@
-@import '../styles/_index.scss';
+@import "../styles/_index.scss";
 
 :root {
-  --background: #ffffff;
+  --background: #F8F8FB;
   --foreground: #171717;
 }
 
-
+[data-theme="dark"] {
+  --background: #0a0a0a;
+  --foreground: #F8F8FB;
+}
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    :root:not([data-theme="light"]) {
+    --background: #141625;
+    --foreground: #F8F8FB;
   }
 }
 
