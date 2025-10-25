@@ -1,0 +1,134 @@
+@use "../based/variables" as *;
+@use "../based/functions" as *;
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 6px;
+  height: 40px;
+  width: fit-content;
+
+  &__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  &__text {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.25px;
+  }
+
+  // Paid Status
+  &--paid {
+    background-color: var(--status-paid-bg);
+
+    .status-badge__dot {
+      background-color: var(--status-paid-dot);
+    }
+
+    .status-badge__text {
+      color: var(--status-paid-text);
+    }
+  }
+
+  // Pending Status
+  &--pending {
+    background-color: var(--status-pending-bg);
+
+    .status-badge__dot {
+      background-color: var(--status-pending-dot);
+    }
+
+    .status-badge__text {
+      color: var(--status-pending-text);
+    }
+  }
+
+  // Draft Status
+  &--draft {
+    background-color: var(--status-draft-bg);
+
+    .status-badge__dot {
+      background-color: var(--status-draft-dot);
+    }
+
+    .status-badge__text {
+      color: var(--status-draft-text);
+    }
+  }
+}
+
+:root {
+  // Paid Status - Light
+  --status-paid-bg: rgba(51, 214, 159, 5.71%);
+  --status-paid-dot: #33d69f;
+  --status-paid-text: #33d69f;
+
+  // Pending Status - Light
+  --status-pending-bg: rgba(255, 143, 0, 5.71%);
+  --status-pending-dot: #ff8f00;
+  --status-pending-text: #ff8f00;
+
+  // Draft Status - Light
+  --status-draft-bg: rgba(55, 59, 83, 5.71%);
+  --status-draft-dot: #373b53;
+  --status-draft-text: #373b53;
+
+  // Other variables
+  --text-primary: #{get-color("08")};
+  --border-default: #{get-color("05")};
+  --input-background: #ffffff;
+}
+
+// Dark Mode Variables
+[data-theme="dark"] {
+  // Paid Status - Dark
+  --status-paid-bg: rgba(51, 214, 159, 0.06);
+  --status-paid-dot: #33d69f;
+  --status-paid-text: #33d69f;
+
+  // Pending Status - Dark
+  --status-pending-bg: rgba(255, 143, 0, 0.06);
+  --status-pending-dot: #ff8f00;
+  --status-pending-text: #ff8f00;
+
+  // Draft Status - Dark
+  --status-draft-bg: rgba(223, 227, 250, 0.06);
+  --status-draft-dot: #dfe3fa;
+  --status-draft-text: #dfe3fa;
+
+  // Other variables
+  --text-primary: #ffffff;
+  --border-default: #{get-color("04")};
+  --input-background: #{get-color("03")};
+}
+
+// Prefers Dark Mode
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    // Paid Status - Dark
+    --status-paid-bg: rgba(51, 214, 159, 0.06);
+    --status-paid-dot: #33d69f;
+    --status-paid-text: #33d69f;
+
+    // Pending Status - Dark
+    --status-pending-bg: rgba(255, 143, 0, 0.06);
+    --status-pending-dot: #ff8f00;
+    --status-pending-text: #ff8f00;
+
+    // Draft Status - Dark
+    --status-draft-bg: rgba(223, 227, 250, 0.06);
+    --status-draft-dot: #dfe3fa;
+    --status-draft-text: #dfe3fa;
+
+    // Other variables
+    --text-primary: #ffffff;
+    --border-default: #{get-color("04")};
+    --input-background: #252945;
+  }
+}
