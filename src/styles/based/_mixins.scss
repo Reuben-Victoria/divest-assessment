@@ -1,0 +1,13 @@
+@mixin heading-s($line-height) {
+  font-weight: 700;
+  font-size: 0.9375rem;
+  line-height: $line-height;
+  letter-spacing: -0.0156rem;
+}
+
+@mixin body-text($line-height, $letter-spacing) {
+  font-weight: 500; 
+  font-size: 0.8125rem;
+  line-height: $line-height;
+  letter-spacing: $letter-spacing;
+}

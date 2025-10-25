@@ -1,0 +1,161 @@
+@use "../based/variables" as *;
+@use "../based/functions" as *;
+
+$primary-color: get-color("01");
+$primary-hover: get-color("02");
+$primary-light: get-color("01");
+$secondary-color: get-color("02");
+$secondary-hover: get-color("02");
+$dark-bg:  get-color("04");
+$dark-ghost:  get-color("04");
+$dark-card: get-color("04");
+$light-accent: get-color("05");
+$text-dark: $black;
+$text-muted: get-color("06");
+$text-secondary: get-color("07");
+$dark-overlay: get-color("08");
+$danger-color: get-color("08");
+$danger-light: get-color("08");
+$danger-hover: get-color("09");
+$ghost-color: #F9FAFE;
+$ghost-hover:  #DFE3FA;
+$ghost-dark-hover: $white;
+$light-bg: get-color("11");
+$dark-bg-alt: get-color("12");
+
+$border-radius: 24px;
+$transition: all 0.2s ease-in-out;
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  height: 48px;
+  border: none;
+  border-radius: $border-radius;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: $transition;
+  white-space: nowrap;
+  outline: none;
+  position: relative;
+
+  &:focus-visible {
+    outline: 2px solid $primary-color;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  &__text {
+    line-height: 1;
+  }
+
+  // Variants
+  &--primary {
+    background-color: $primary-color;
+    color: $white;
+
+    &:hover:not(:disabled) {
+      background-color: $primary-hover;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba($primary-color, 0.3);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+    }
+  }
+
+  &--secondary {
+    background-color: $secondary-color;
+    color: $white;
+
+    &:hover:not(:disabled) {
+      background-color: $secondary-hover;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba($secondary-color, 0.3);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+    }
+  }
+
+  &--danger {
+    background-color: $danger-color;
+    color: $white;
+
+    &:hover:not(:disabled) {
+      background-color: $danger-hover;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba($danger-color, 0.3);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+    }
+  }
+
+  &--ghost {
+    background-color: $ghost-color;
+    color: $text-secondary;
+
+    &:hover:not(:disabled) {
+      background-color: $ghost-hover;
+    }
+
+    &:active:not(:disabled) {
+      background-color: $ghost-hover;
+    }
+  }
+
+  // Sizes
+  &--small {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  &--medium {
+    padding: 12px 24px;
+    font-size: 15px;
+  }
+
+  &--large {
+    padding: 14px 28px;
+    font-size: 16px;
+  }
+
+  // Full width
+  &--fullWidth {
+    width: 100%;
+  }
+}
+
+[data-theme="dark"] {
+  .button {
+    &--ghost {
+      background-color: $dark-ghost;
+      color: $light-accent;
+
+      &:hover:not(:disabled) {
+        background-color: $ghost-dark-hover;
+        color: $light-accent;
+      }
+    }
+  }
+}

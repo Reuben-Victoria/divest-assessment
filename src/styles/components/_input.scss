@@ -1,0 +1,123 @@
+// TextField Styles
+.textfield {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 350px;
+
+  &--fullWidth {
+    width: 100%;
+  }
+
+  &__label {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    margin-bottom: 0;
+  }
+
+
+  &__input {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: inherit;
+    border-radius: 8px;
+    border: 1px solid var(--border-default);
+    background-color: var(--input-background);
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+    outline: none;
+
+    &::placeholder {
+      color: var(--text-placeholder);
+      font-weight: 400;
+    }
+
+    // Default state
+    &:not(&--filled):not(&--active) {
+      background-color: var(--input-background);
+    }
+
+    // Filled state
+    &--filled {
+      background-color: var(--input-background-filled);
+    }
+
+    // Active/Focus state
+    &--active {
+      border-color: var(--border-active);
+      background-color: var(--input-background);
+    }
+
+    // Error state
+    &--error {
+      border-color: var(--border-error);
+    }
+
+    // Disabled state
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  // Error message
+  &__error {
+    font-size: 12px;
+    color: var(--text-error);
+  }
+
+  // Helper text
+  &__helper {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+}
+
+// Light Mode Variables
+:root {
+  --text-primary: #000000;
+  --text-secondary: #8e92bc;
+  --text-placeholder: #a0a0a0;
+  --text-error: #ef4444;
+
+  --input-background: #ffffff;
+  --input-background-filled: #f8f9fc;
+
+  --border-default: #e5e7eb;
+  --border-active: #6366f1;
+  --border-error: #ef4444;
+}
+
+// Dark Mode Variables
+[data-theme="dark"] {
+  --text-primary: #ffffff;
+  --text-secondary: #8e92bc;
+  --text-placeholder: #6b7280;
+  --text-error: #ef4444;
+
+  --input-background: #1e2139;
+  --input-background-filled: #252946;
+
+  --border-default: #2d3154;
+  --border-active: #7c3aed;
+  --border-error: #ef4444;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --text-primary: #ffffff;
+    --text-secondary: #8e92bc;
+    --text-placeholder: #6b7280;
+    --text-error: #ef4444;
+
+    --input-background: #1e2139;
+    --input-background-filled: #252946;
+
+    --border-default: #2d3154;
+    --border-active: #7c3aed;
+    --border-error: #ef4444;
+  }
+}
