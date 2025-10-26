@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 
-import { Button, InvoiceCard, FilterCheckbox } from "@/components";
+import { Button, InvoiceCard, FilterCheckbox, RenderIf } from "@/components";
 import type { Invoice } from "@/types";
 import InvoiceFormModal from "./InvoiceFormModal";
 
@@ -127,10 +127,12 @@ const InvoicesPage = () => {
         ))}
       </div>
 
-      <InvoiceFormModal
-        mode="create"
-        onClose={() => setIsAddInvoiceModalOpen(false)}
-      />
+      <RenderIf condition={isAddInvoiceModalOpen}>
+        <InvoiceFormModal
+          mode="create"
+          onClose={() => setIsAddInvoiceModalOpen(false)}
+        />
+      </RenderIf>
     </div>
   );
 };

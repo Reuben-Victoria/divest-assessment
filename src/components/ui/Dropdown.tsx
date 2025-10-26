@@ -11,7 +11,7 @@ interface DropdownProps {
   options?: DropdownOption[];
   defaultValue?: string;
   fullWidth?: boolean;
-  onChange?: (value: string) => void;
+  onChange?: (value: string ) => void;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({

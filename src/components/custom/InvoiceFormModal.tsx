@@ -8,7 +8,13 @@ import {
   calculatePaymentDue,
   getEmptyInvoiceForm,
 } from "@/utils/invoiceHelper";
-import { Button, RenderIf, TextInput } from "@/components";
+import {
+  Button,
+  RenderIf,
+  TextInput,
+  DatePicker,
+  Dropdown,
+} from "@/components";
 
 interface InvoiceFormModalProps {
   mode: "create" | "edit";
@@ -111,14 +117,6 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
               {invoice?.id}
             </RenderIf>
             <RenderIf condition={!isEditMode}>New Invoice</RenderIf>
-            {/* {isEditMode ? (
-              <>
-                Edit <span className="invoice-form-modal__title-hash">#</span>
-                {invoice?.id}
-              </>
-            ) : (
-              "New Invoice"
-            )} */}
           </h2>
         </div>
 
@@ -247,32 +245,21 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
             </div>
 
             {/* Invoice Details */}
-            <div className="form-row">
-              <TextInput
+            <div className="form-row-one">
+              <DatePicker
                 label="Invoice Date"
-                type="date"
-                value={formData.invoiceDate}
-                onChange={(e) =>
-                  handleInputChange("invoiceDate", e.target.value)
-                }
+                onChange={(value) => handleInputChange("invoiceDate", value)}
                 error={errors.invoiceDate}
               />
+              {errors.invoiceDate && (
+                <span className="textinput__error">{errors.invoiceDate}</span>
+              )}
               <div className="form-field">
-                <label className="form-field__label">Payment Terms</label>
-                <select
-                  className={`form-field__input ${
-                    errors.paymentTerms ? "form-field__input--error" : ""
-                  }`}
-                  value={formData.paymentTerms}
-                  onChange={(e) =>
-                    handleInputChange("paymentTerms", parseInt(e.target.value))
-                  }
-                >
-                  <option value="1">Net 1 Day</option>
-                  <option value="7">Net 7 Days</option>
-                  <option value="14">Net 14 Days</option>
-                  <option value="30">Net 30 Days</option>
-                </select>
+                <Dropdown
+                  fullWidth
+                  label="Payment Terms"
+                  onChange={(value) => handleInputChange("paymentTerms", value)}
+                />
                 {errors.paymentTerms && (
                   <span className="textinput__error">
                     {errors.paymentTerms}
@@ -291,7 +278,7 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
             />
 
             {/* Item List */}
-            <div className="invoice-form-modal__section">
+            <div className="invoice-form-modal__section-one ">
               <h3 className="invoice-form-modal__section-title">Item List</h3>
 
               {formData.items.map((item, index) => (
@@ -351,13 +338,15 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
                 <span className="textinput__error">{errors.items}</span>
               )}
 
-              <button
+              <Button
                 type="button"
+                variant="default"
+                fullWidth
                 className="btn-add-item"
                 onClick={handleAddItem}
               >
                 + Add New Item
-              </button>
+              </Button>
             </div>
           </div>
 
