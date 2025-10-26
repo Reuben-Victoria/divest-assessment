@@ -37,12 +37,11 @@
       font-weight: 400;
     }
 
-    // Default state
+ 
     &:not(&--filled):not(&--active) {
       background-color: var(--input-background);
     }
 
-    // Filled state
     &--filled {
       background-color: var(--input-background-filled);
     }
@@ -113,7 +112,7 @@
     --text-secondary: #8e92bc;
     --text-placeholder: #6b7280;
     --text-error: #{get-color("10")};
-    --input-background: #1e2139;
+    --input-background: #{get-color("03")};
     --input-background-filled: #252946;
     --border-default: #{get-color("04")};
     --border-active: #{get-color("05")};

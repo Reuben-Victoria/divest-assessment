@@ -342,7 +342,7 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
                 type="button"
                 variant="default"
                 fullWidth
-                className="btn-add-item"
+                // className="btn-add-item"
                 onClick={handleAddItem}
               >
                 + Add New Item
@@ -351,20 +351,28 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
           </div>
 
           <div className="invoice-form-modal__footer">
-            {!isEditMode && (
-              <Button
-                type="button"
-                variant="secondary"
-                onClick={handleSaveAsDraft}
-                className="invoice-form-modal__draft-btn"
-              >
-                Save as Draft
+            <RenderIf condition={!isEditMode}>
+              <Button type="button" variant="ghost" onClick={onClose}>
+                Discard
               </Button>
-            )}
+            </RenderIf>
+
             <div className="invoice-form-modal__footer-right">
-              <Button type="button" variant="secondary" onClick={onClose}>
-                Cancel
-              </Button>
+              <RenderIf condition={!isEditMode}>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={handleSaveAsDraft}
+                >
+                  Save as Draft
+                </Button>
+              </RenderIf>
+
+              <RenderIf condition={isEditMode}>
+                <Button type="button" variant="ghost" onClick={onClose}>
+                  Cancel
+                </Button>
+              </RenderIf>
               <Button type="submit" variant="primary" disabled={isSubmitting}>
                 {isSubmitting
                   ? "Saving..."

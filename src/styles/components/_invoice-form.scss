@@ -98,16 +98,22 @@
   }
 
   &__footer {
-    padding: 20px 28px;
+    padding: 20px 56px;
     background-color: var(--modal-footer-bg);
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
     display: flex;
-    justify-content: flex-end;
-    gap: 4px;
+    justify-content: space-between;
+    gap: 16px;
     border-top: 1px solid var(--border-default);
+
+    &-right {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
   }
 
   // Tablet

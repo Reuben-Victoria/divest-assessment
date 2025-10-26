@@ -4,8 +4,8 @@
 $primary-color: get-color("01");
 $primary-hover: get-color("02");
 $primary-light: get-color("01");
-$secondary-color: get-color("02");
-$secondary-hover: get-color("02");
+$secondary-color: #373b53;
+$secondary-hover: get-color("03");
 $dark-bg: get-color("04");
 $dark-ghost: get-color("04");
 $dark-card: get-color("04");
@@ -84,7 +84,7 @@ $transition: all 0.2s ease-in-out;
 
   &--secondary {
     background-color: $secondary-color;
-    color: $white;
+    color: $light-accent;
 
     &:hover:not(:disabled) {
       background-color: $secondary-hover;
@@ -125,7 +125,6 @@ $transition: all 0.2s ease-in-out;
     }
   }
 
-  
   &--default {
     background-color: $ghost-color;
     color: $text-secondary;
@@ -163,13 +162,18 @@ $transition: all 0.2s ease-in-out;
 
 [data-theme="dark"] {
   .button {
-    &--ghost {
+    &--default {
       background-color: $dark-ghost;
       color: $light-accent;
 
       &:hover:not(:disabled) {
-        background-color: $ghost-dark-hover;
-        color: $light-accent;
+        background-color: $secondary-hover;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba($secondary-color, 0.3);
+      }
+
+      &:active:not(:disabled) {
+        background-color: $dark-ghost;
       }
     }
   }
