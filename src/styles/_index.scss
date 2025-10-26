@@ -13,6 +13,8 @@
 @forward "components/statusbadge";
 @forward "components/sidebar";
 @forward "components/invoice-card";
+@forward "components/delete-modal";
+@forward "components/invoice-form"; 
 
 //pages
 @forward "pages/invoice";

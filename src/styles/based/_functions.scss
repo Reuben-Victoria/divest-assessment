@@ -6,5 +6,12 @@
 }
 
 @function get-breakpoint($key) {
-  @return map-get($breakpoints, $key);
+  @return map.get($breakpoints, $key);
 }
+
+
+@function get-spacing($key) {
+  @return map.get($spacing, $key);
+}
+
+

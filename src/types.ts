@@ -19,6 +19,15 @@ export interface InvoiceDetails extends Invoice {
   total: number;
 }
 
+
+
+export interface InvoiceItem {
+  name: string;
+  quantity: number;
+  price: number;
+  total: number;
+}
+
 export interface Address {
   street: string;
   city: string;
@@ -26,9 +35,24 @@ export interface Address {
   country: string;
 }
 
-export interface InvoiceItem {
-  name: string;
-  quantity: number;
-  price: number;
+export interface InvoiceFormData {
+  id?: string;
+  status?: StatusType;
+  description: string;
+  senderAddress: Address;
+  clientName: string;
+  clientEmail: string;
+  clientAddress: Address;
+  invoiceDate: string;
+  paymentDue?: string;
+  paymentTerms: number;
+  items: InvoiceItem[];
+  total?: number;
+}
+
+export interface InvoiceDetailData extends InvoiceFormData {
+  id: string;
+  status: StatusType;
+  paymentDue: string;
   total: number;
 }

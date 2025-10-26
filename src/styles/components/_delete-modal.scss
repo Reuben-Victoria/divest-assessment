@@ -1,0 +1,88 @@
+@use "../../styles/based/variables" as *;
+@use "../../styles/based/functions" as *;
+@use "../../styles/based/mixins" as *;
+
+.delete-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s ease;
+  }
+
+  &__content {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    background-color: var(--modal-background);
+    border-radius: 8px;
+    padding: 24px;
+    animation: scaleIn 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  &__title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 8px 0;
+  }
+
+  &__message {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin: 0 0 20px 0;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 4px;
+  }
+
+  @include mobile {
+    &__content {
+      padding: 20px;
+    }
+
+    &__title {
+      font-size: 20px;
+    }
+
+    &__actions {
+      flex-direction: column-reverse;
+      gap: 8px;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

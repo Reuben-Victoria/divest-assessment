@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 
 import { Button, InvoiceCard, FilterCheckbox } from "@/components";
 import type { Invoice } from "@/types";
+import InvoiceFormModal from "./InvoiceFormModal";
 
 // Mock data
 const invoicesData: Invoice[] = [
@@ -59,6 +60,7 @@ const invoicesData: Invoice[] = [
 
 const InvoicesPage = () => {
   const [filters, setFilters] = useState<string[]>([]);
+  const [isAddInvoiceModalOpen, setIsAddInvoiceModalOpen] = useState(false);
   const [filteredInvoices, setFilteredInvoices] =
     useState<Invoice[]>(invoicesData);
 
@@ -77,7 +79,7 @@ const InvoicesPage = () => {
 
   const handleNewInvoice = () => {
     console.log("New invoice clicked");
-    // Add your new invoice logic here
+    setIsAddInvoiceModalOpen(true);
   };
 
   const handleInvoiceClick = (invoice: Invoice) => {
@@ -124,6 +126,11 @@ const InvoicesPage = () => {
           />
         ))}
       </div>
+
+      <InvoiceFormModal
+        mode="create"
+        onClose={() => setIsAddInvoiceModalOpen(false)}
+      />
     </div>
   );
 };
