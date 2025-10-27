@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useState, useCallback, useMemo } from "react";
 import { Button, InvoiceCard, FilterCheckbox, RenderIf } from "@/components";
 import type { Invoice } from "@/types";
@@ -9,6 +10,7 @@ import EmptyState from "./EmptyState";
 const InvoicesPage = () => {
   const [filters, setFilters] = useState<string[]>([]);
   const [isAddInvoiceModalOpen, setIsAddInvoiceModalOpen] = useState(false);
+  const router = useRouter();
   const { data } = useGetAllInvoices();
   const invoicesData: Invoice[] = useMemo(
     () =>
@@ -34,7 +36,7 @@ const InvoicesPage = () => {
   const handleNewInvoice = () => setIsAddInvoiceModalOpen(true);
 
   const handleInvoiceClick = (invoice: Invoice) => {
-    console.log("Invoice clicked:", invoice);
+    router.push(`/${invoice?.id}`)
   };
 
   const newInvoiceIcon = (

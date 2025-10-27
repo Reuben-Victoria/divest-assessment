@@ -340,7 +340,6 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
                 type="button"
                 variant="default"
                 fullWidth
-                // className="btn-add-item"
                 onClick={handleAddItem}
               >
                 + Add New Item

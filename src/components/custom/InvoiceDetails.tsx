@@ -6,6 +6,7 @@ import InvoiceFormModal from "./InvoiceFormModal";
 import DeleteModal from "./DeleteInvoiceModal";
 import { useGetInvoiceById } from "@/services/hooks/queries/useInvoice";
 import { StatusType } from "@/types";
+import { useDeleteInvoice } from "@/services/hooks/mutations/useInvoice";
 export interface InvoiceItem {
   name: string;
   quantity: number;
@@ -18,6 +19,10 @@ const InvoiceDetail = () => {
   const { id } = useParams();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const { data } = useGetInvoiceById({ id: id as string });
+
+  const { mutate: deleteInvoice } = useDeleteInvoice(() =>
+    router.push("/")
+  );
 
   const invoice = useMemo(() => data, [data]);
 
@@ -37,11 +42,7 @@ const InvoiceDetail = () => {
   };
 
   const handleConfirmDelete = () => {
-    // if (onDelete) {
-    // //   onDelete(invoice.id);
-    // }
-    setIsDeleteModalOpen(false);
-    router.push("/invoices");
+    deleteInvoice(id as string);
   };
 
   const handleMarkAsPaid = () => {

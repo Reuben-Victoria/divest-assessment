@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import Image from "next/image";
 
 interface SidebarProps {
@@ -15,7 +16,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   onThemeToggle,
 }) => {
   const [theme, setTheme] = useState<"light" | "dark">("light");
- 
+
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
@@ -31,15 +32,17 @@ const Sidebar: React.FC<SidebarProps> = ({
   return (
     <aside className="sidebar">
       <div className="sidebar__top">
-        <Image
-          fill
-          sizes="100vw"
-          src={
-            "https://res.cloudinary.com/dq9rackyr/image/upload/v1761387393/Group_9_rglr3f.png"
-          }
-          className=""
-          alt="Logo"         
-        />
+        <Link href={"/"}>
+          <Image
+            fill
+            sizes="100vw"
+            src={
+              "https://res.cloudinary.com/dq9rackyr/image/upload/v1761387393/Group_9_rglr3f.png"
+            }
+            className=""
+            alt="Logo"
+          />
+        </Link>
       </div>
 
       <div className="sidebar__bottom">

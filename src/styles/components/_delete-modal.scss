@@ -66,12 +66,9 @@
     }
 
     &__actions {
-      flex-direction: column-reverse;
       gap: 8px;
 
-      button {
-        width: 100%;
-      }
+      
     }
   }
 }
