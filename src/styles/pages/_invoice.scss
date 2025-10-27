@@ -2,15 +2,15 @@
 @use "../../styles/based/functions" as *;
 
 .invoices-page {
-//   min-height: 100vh;
-//   background-color: var(--page-background);
-//   padding-left: 103px;
+  //   min-height: 100vh;
+  //   background-color: var(--page-background);
+  //   padding-left: 103px;
 
-//   &__content {
-//     padding: 72px 48px;
-//     max-width: 730px;
-//     margin: 0 auto;
-//   }
+  //   &__content {
+  //     padding: 72px 48px;
+  //     max-width: 730px;
+  //     margin: 0 auto;
+  //   }
 
   &__container {
     width: 100%;
@@ -63,11 +63,18 @@
   --text-secondary: #{get-color("07")};
 }
 
-// Dark Mode
 [data-theme="dark"] {
   --page-background: #141625;
   --text-primary: #ffffff;
   --text-secondary: #{get-color("05")};
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page-background: #141625;
+    --text-primary: #ffffff;
+    --text-secondary: #{get-color("05")};
+  }
 }
 
 @media (max-width: 768px) {

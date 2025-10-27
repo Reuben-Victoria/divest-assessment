@@ -31,13 +31,26 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
+[data-theme="dark"] {
+  .empty-state {
     h2 {
-      color: $white;
+      color: #ffff;
     }
     p {
       color: get-color("05");
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    .empty-state {
+      h2 {
+        color: #ffff;
+      }
+      p {
+        color: get-color("05");
+      }
     }
   }
 }
