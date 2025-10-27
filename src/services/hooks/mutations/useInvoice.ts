@@ -34,3 +34,22 @@ export const useUpdateInvoiceStatus = (onSuccessCallback?: () => void) => {
     },
   });
 };
+
+export const useUpdateInvoice = (onSuccessCallback?: () => void) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      id,
+      invoice,
+    }: {
+      id: string;
+      invoice: Partial<InvoiceFormData>;
+    }) =>
+      apiRequest<void>(`http://localhost:5000/invoices/${id}`, "PUT", invoice),
+    onSuccess: () => {
+      onSuccessCallback?.();
+      queryClient.invalidateQueries({ queryKey: ["get-invoices"] });
+    },
+  });
+};

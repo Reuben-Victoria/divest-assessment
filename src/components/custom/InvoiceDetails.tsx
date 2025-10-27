@@ -2,13 +2,15 @@
 import { useMemo, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { StatusBadge, Button, RenderIf } from "@/components";
+import { toInvoiceFormData } from "@/utils/formatter";
 import InvoiceFormModal from "./InvoiceFormModal";
 import DeleteModal from "./DeleteInvoiceModal";
 import { useGetInvoiceById } from "@/services/hooks/queries/useInvoice";
-import { StatusType } from "@/types";
+import { InvoiceFormData, StatusType } from "@/types";
 import {
   useDeleteInvoice,
   useUpdateInvoiceStatus,
+  useUpdateInvoice,
 } from "@/services/hooks/mutations/useInvoice";
 export interface InvoiceItem {
   name: string;
@@ -26,6 +28,9 @@ const InvoiceDetail = () => {
   const { mutate: deleteInvoice, isPending: isDeleting } = useDeleteInvoice(
     () => router.push("/")
   );
+
+  const { mutate: updateInvoice, isPending: isUpdatingInvoice } =
+    useUpdateInvoice(() => setIsEditModalOpen(false));
 
   const { mutate: updateInvoiceStatus, isPending: isUpdatingStatus } =
     useUpdateInvoiceStatus();
@@ -58,11 +63,11 @@ const InvoiceDetail = () => {
     });
   };
 
-  const handleSaveEdit = (updatedInvoice) => {
-    // if (onEdit) {
-    //   onEdit(updatedInvoice);
-    // }
-    setIsEditModalOpen(false);
+  const handleSaveEdit = (updatedInvoice: Partial<InvoiceFormData>) => {
+    updateInvoice({
+      id: invoice?.id as string,
+      invoice: toInvoiceFormData(updatedInvoice),
+    });
   };
 
   return (
