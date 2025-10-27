@@ -4,6 +4,7 @@ import "./globals.css";
 import "../styles/_index.scss";
 import { ThemeProvider } from "@/context/ThemeContext";
 import DashboardLayout from "@/layout/DashboardLayout";
+import Providers from "./providers";
 
 const leagueSpartan = League_Spartan({
   variable: "--font-league-spartan",
@@ -23,9 +24,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${leagueSpartan.variable} antialiased`}>
-        <ThemeProvider>
-          <DashboardLayout> {children}</DashboardLayout>
-        </ThemeProvider>
+        <Providers>
+          <ThemeProvider>
+            <DashboardLayout> {children}</DashboardLayout>
+          </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

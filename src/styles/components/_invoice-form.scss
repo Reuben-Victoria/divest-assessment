@@ -55,6 +55,8 @@
     flex: 1;
     overflow-y: auto;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
     padding: 24px 56px;
     overflow-x: hidden;
 
