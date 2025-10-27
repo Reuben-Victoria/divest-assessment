@@ -1,86 +1,37 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
-
+import { useState, useCallback, useMemo } from "react";
 import { Button, InvoiceCard, FilterCheckbox, RenderIf } from "@/components";
 import type { Invoice } from "@/types";
 import InvoiceFormModal from "./InvoiceFormModal";
-
-// Mock data
-const invoicesData: Invoice[] = [
-  {
-    id: "RT3080",
-    dueDate: "19 Aug 2021",
-    clientName: "Jensen Huang",
-    amount: 1800.9,
-    status: "paid",
-  },
-  {
-    id: "XM9141",
-    dueDate: "20 Sep 2021",
-    clientName: "Alex Grim",
-    amount: 556.0,
-    status: "pending",
-  },
-  {
-    id: "RG0314",
-    dueDate: "01 Oct 2021",
-    clientName: "John Morrison",
-    amount: 14002.33,
-    status: "paid",
-  },
-  {
-    id: "RT2080",
-    dueDate: "12 Oct 2021",
-    clientName: "Alysa Werner",
-    amount: 102.04,
-    status: "pending",
-  },
-  {
-    id: "AA1449",
-    dueDate: "14 Oct 2021",
-    clientName: "Mellisa Clarke",
-    amount: 4032.33,
-    status: "pending",
-  },
-  {
-    id: "TY9141",
-    dueDate: "31 Oct 2021",
-    clientName: "Thomas Wayne",
-    amount: 6155.91,
-    status: "pending",
-  },
-  {
-    id: "FV2353",
-    dueDate: "12 Nov 2021",
-    clientName: "Anita Wainwright",
-    amount: 3102.04,
-    status: "draft",
-  },
-];
+import { useGetAllInvoices } from "@/services/hooks/queries/useInvoice";
+import EmptyState from "./EmptyState";
 
 const InvoicesPage = () => {
   const [filters, setFilters] = useState<string[]>([]);
   const [isAddInvoiceModalOpen, setIsAddInvoiceModalOpen] = useState(false);
-  const [filteredInvoices, setFilteredInvoices] =
-    useState<Invoice[]>(invoicesData);
+  const { data } = useGetAllInvoices();
+  const invoicesData: Invoice[] = useMemo(
+    () =>
+      data?.map((item) => ({
+        id: item?.id,
+        dueDate: item?.paymentDue,
+        clientName: item?.clientName,
+        amount: item?.total,
+        status: item?.status?.toLowerCase(),
+      })),
+    [data]
+  );
 
-  useEffect(() => {
-    if (filters.length === 0) {
-      setFilteredInvoices(invoicesData);
-    } else {
-      setFilteredInvoices(
-        invoicesData.filter((invoice) => filters.includes(invoice.status))
-      );
-    }
-  }, [filters]);
+  const filteredInvoices = useMemo(() => {
+    if (filters.length === 0) return invoicesData;
+    return invoicesData?.filter((invoice) => filters.includes(invoice.status));
+  }, [filters, invoicesData]);
+
   const handleFilterChange = useCallback((selectedFilters: string[]) => {
     setFilters(selectedFilters);
   }, []);
 
-  const handleNewInvoice = () => {
-    console.log("New invoice clicked");
-    setIsAddInvoiceModalOpen(true);
-  };
+  const handleNewInvoice = () => setIsAddInvoiceModalOpen(true);
 
   const handleInvoiceClick = (invoice: Invoice) => {
     console.log("Invoice clicked:", invoice);
@@ -101,7 +52,7 @@ const InvoicesPage = () => {
         <div className="invoices-header__left">
           <h1 className="invoices-header__title">Invoices</h1>
           <p className="invoices-header__subtitle">
-            There are {filteredInvoices.length} total invoices
+            There are {filteredInvoices?.length} total invoices
           </p>
         </div>
 
@@ -118,17 +69,24 @@ const InvoicesPage = () => {
       </header>
 
       <div className="invoices-list">
-        {filteredInvoices.map((invoice) => (
-          <InvoiceCard
-            key={invoice.id}
-            invoice={invoice}
-            onClick={handleInvoiceClick}
-          />
-        ))}
+        <RenderIf condition={filteredInvoices?.length > 0}>
+          {filteredInvoices?.map((invoice) => (
+            <InvoiceCard
+              key={invoice.id}
+              invoice={invoice}
+              onClick={handleInvoiceClick}
+            />
+          ))}
+        </RenderIf>
+
+        <RenderIf condition={filteredInvoices?.length === 0}>
+          <EmptyState />
+        </RenderIf>
       </div>
 
       <RenderIf condition={isAddInvoiceModalOpen}>
         <InvoiceFormModal
+          invoice={data}
           mode="create"
           onClose={() => setIsAddInvoiceModalOpen(false)}
         />

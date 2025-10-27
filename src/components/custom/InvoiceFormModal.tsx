@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import { InvoiceDetailData } from "@/types";
+import { InvoiceFormData } from "@/types";
 import { useInvoiceForm } from "@/hooks/useInvoiceForm";
 import {
   calculateInvoiceTotal,
@@ -18,9 +18,9 @@ import {
 
 interface InvoiceFormModalProps {
   mode: "create" | "edit";
-  invoice?: InvoiceDetailData;
+  invoice?: InvoiceFormData;
   onClose: () => void;
-  onSave: (invoice: InvoiceDetailData) => void;
+  onSave: (invoice: InvoiceFormData) => void;
 }
 
 const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
@@ -64,7 +64,7 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
         formData.paymentTerms
       );
 
-      const invoiceData: InvoiceDetailData = {
+      const invoiceData: InvoiceFormData = {
         ...formData,
         id: isEditMode && invoice ? invoice.id : generateInvoiceId(),
         status: isEditMode && invoice ? invoice.status : "pending",
@@ -74,7 +74,6 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
 
       onSave(invoiceData);
     } else {
-      // Scroll to first error
       const firstErrorElement = document.querySelector(".textinput__error");
       if (firstErrorElement) {
         firstErrorElement.scrollIntoView({
@@ -94,7 +93,7 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
       formData.paymentTerms
     );
 
-    const invoiceData: InvoiceDetailData = {
+    const invoiceData: InvoiceFormData = {
       ...formData,
       id: generateInvoiceId(),
       status: "draft",
@@ -249,7 +248,6 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
               <DatePicker
                 label="Invoice Date"
                 onChange={(value) => handleInputChange("invoiceDate", value)}
-                error={errors.invoiceDate}
               />
               {errors.invoiceDate && (
                 <span className="textinput__error">{errors.invoiceDate}</span>

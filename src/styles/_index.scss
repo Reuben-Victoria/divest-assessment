@@ -14,10 +14,12 @@
 @forward "components/sidebar";
 @forward "components/invoice-card";
 @forward "components/delete-modal";
-@forward "components/invoice-form"; 
+@forward "components/invoice-form";
+@forward "components/empty-state";
 
 //pages
 @forward "pages/invoice";
+@forward "pages/invoice-detail";
 
 //layout
 @forward "layouts/dashboard-layout";

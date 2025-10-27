@@ -1,11 +1,11 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useMemo, useState } from "react";
+import { useRouter, useParams } from "next/navigation";
 import { StatusBadge, Button } from "@/components";
 import InvoiceFormModal from "./InvoiceFormModal";
 import DeleteModal from "./DeleteInvoiceModal";
-
-import { InvoiceDetailData } from "@/types";
+import { useGetInvoiceById } from "@/services/hooks/queries/useInvoice";
+import { StatusType } from "@/types";
 export interface InvoiceItem {
   name: string;
   quantity: number;
@@ -13,21 +13,15 @@ export interface InvoiceItem {
   total: number;
 }
 
-interface InvoiceDetailProps {
-  invoice: InvoiceDetailData;
-  onEdit?: (invoice: InvoiceDetailData) => void;
-  onDelete?: (invoiceId: string) => void;
-  onMarkAsPaid?: (invoiceId: string) => void;
-}
-
-const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
-  invoice,
-  onEdit,
-  onDelete,
-  onMarkAsPaid,
-}) => {
+const InvoiceDetail = () => {
   const router = useRouter();
+  const { id } = useParams();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const { data } = useGetInvoiceById({ id: id as string });
+
+  const invoice = useMemo(() => data, [data]);
+
+  console.log(data);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const handleGoBack = () => {
@@ -43,23 +37,23 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
   };
 
   const handleConfirmDelete = () => {
-    if (onDelete) {
-      onDelete(invoice.id);
-    }
+    // if (onDelete) {
+    // //   onDelete(invoice.id);
+    // }
     setIsDeleteModalOpen(false);
     router.push("/invoices");
   };
 
   const handleMarkAsPaid = () => {
-    if (onMarkAsPaid) {
-      onMarkAsPaid(invoice.id);
-    }
+    // if (onMarkAsPaid) {
+    //   onMarkAsPaid(invoice.id);
+    // }
   };
 
-  const handleSaveEdit = (updatedInvoice: InvoiceDetailData) => {
-    if (onEdit) {
-      onEdit(updatedInvoice);
-    }
+  const handleSaveEdit = (updatedInvoice) => {
+    // if (onEdit) {
+    //   onEdit(updatedInvoice);
+    // }
     setIsEditModalOpen(false);
   };
 
@@ -74,22 +68,24 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
         </button>
 
         <div className="invoice-detail__status-bar">
-          <div className="invoice-detail__status-label">Status</div>
-          <StatusBadge status={invoice.status} />
-        </div>
+          <div className="invoice-detail__status-bar-right">
+            <div className="invoice-detail__status-label">Status</div>
+            <StatusBadge status={invoice?.status as StatusType} />
+          </div>
 
-        <div className="invoice-detail__actions-mobile">
-          <Button variant="secondary" onClick={handleEdit}>
-            Edit
-          </Button>
-          <Button variant="danger" onClick={handleDelete}>
-            Delete
-          </Button>
-          {invoice.status !== "paid" && (
-            <Button variant="primary" onClick={handleMarkAsPaid}>
-              Mark as Paid
+          <div className="invoice-detail__actions-desktop">
+            <Button variant="secondary" onClick={handleEdit}>
+              Edit
             </Button>
-          )}
+            <Button variant="danger" onClick={handleDelete}>
+              Delete
+            </Button>
+            {invoice?.status !== "paid" && (
+              <Button variant="primary" onClick={handleMarkAsPaid}>
+                Mark as Paid
+              </Button>
+            )}
+          </div>
         </div>
 
         <div className="invoice-detail__content">
@@ -97,17 +93,17 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
             <div className="invoice-detail__header-left">
               <h2 className="invoice-detail__id">
                 <span className="invoice-detail__hash">#</span>
-                {invoice.id}
+                {invoice?.id}
               </h2>
               <p className="invoice-detail__description">
-                {invoice.description}
+                {invoice?.description}
               </p>
             </div>
             <div className="invoice-detail__sender-address">
-              <p>{invoice.senderAddress.street}</p>
-              <p>{invoice.senderAddress.city}</p>
-              <p>{invoice.senderAddress.postCode}</p>
-              <p>{invoice.senderAddress.country}</p>
+              <p>{invoice?.senderAddress.street}</p>
+              <p>{invoice?.senderAddress.city}</p>
+              <p>{invoice?.senderAddress.postCode}</p>
+              <p>{invoice?.senderAddress.country}</p>
             </div>
           </div>
 
@@ -116,13 +112,13 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
               <div className="invoice-detail__info-item">
                 <label>Invoice Date</label>
                 <p className="invoice-detail__info-value">
-                  {invoice.invoiceDate}
+                  {invoice?.createdAt}
                 </p>
               </div>
               <div className="invoice-detail__info-item">
                 <label>Payment Due</label>
                 <p className="invoice-detail__info-value">
-                  {invoice.paymentDue}
+                  {invoice?.paymentDue}
                 </p>
               </div>
             </div>
@@ -131,13 +127,13 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
               <div className="invoice-detail__info-item">
                 <label>Bill To</label>
                 <p className="invoice-detail__info-value">
-                  {invoice.clientName}
+                  {invoice?.clientName}
                 </p>
                 <div className="invoice-detail__client-address">
-                  <p>{invoice.clientAddress.street}</p>
-                  <p>{invoice.clientAddress.city}</p>
-                  <p>{invoice.clientAddress.postCode}</p>
-                  <p>{invoice.clientAddress.country}</p>
+                  <p>{invoice?.clientAddress.street}</p>
+                  <p>{invoice?.clientAddress.city}</p>
+                  <p>{invoice?.clientAddress.postCode}</p>
+                  <p>{invoice?.clientAddress.country}</p>
                 </div>
               </div>
             </div>
@@ -146,7 +142,7 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
               <div className="invoice-detail__info-item">
                 <label>Sent to</label>
                 <p className="invoice-detail__info-value">
-                  {invoice.clientEmail}
+                  {invoice?.clientEmail}
                 </p>
               </div>
             </div>
@@ -160,17 +156,17 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
               <span className="invoice-detail__items-total">Total</span>
             </div>
 
-            {invoice.items.map((item, index) => (
+            {invoice?.items.map((item, index) => (
               <div key={index} className="invoice-detail__item">
-                <span className="invoice-detail__item-name">{item.name}</span>
+                <span className="invoice-detail__item-name">{item?.name}</span>
                 <span className="invoice-detail__item-qty">
-                  {item.quantity}
+                  {item?.quantity}
                 </span>
                 <span className="invoice-detail__item-price">
-                  £ {item.price.toFixed(2)}
+                  £ {item?.price.toFixed(2)}
                 </span>
                 <span className="invoice-detail__item-total">
-                  £ {item.total.toFixed(2)}
+                  £ {item?.total.toFixed(2)}
                 </span>
               </div>
             ))}
@@ -178,20 +174,20 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
             <div className="invoice-detail__amount-due">
               <span>Amount Due</span>
               <span className="invoice-detail__amount-value">
-                £ {invoice.total.toFixed(2)}
+                £ {invoice?.total?.toFixed(2)}
               </span>
             </div>
           </div>
         </div>
 
-        <div className="invoice-detail__actions-desktop">
+        <div className="invoice-detail__actions-mobile">
           <Button variant="secondary" onClick={handleEdit}>
             Edit
           </Button>
           <Button variant="danger" onClick={handleDelete}>
             Delete
           </Button>
-          {invoice.status !== "paid" && (
+          {invoice?.status !== "paid" && (
             <Button variant="primary" onClick={handleMarkAsPaid}>
               Mark as Paid
             </Button>
@@ -210,7 +206,7 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
 
       {isDeleteModalOpen && (
         <DeleteModal
-          invoiceId={invoice.id}
+          invoiceId={invoice?.id as string}
           onClose={() => setIsDeleteModalOpen(false)}
           onConfirm={handleConfirmDelete}
         />

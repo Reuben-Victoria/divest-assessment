@@ -12,7 +12,7 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({
   className = "",
 }) => {
   const getStatusLabel = (status: StatusType): string => {
-    return status.charAt(0).toUpperCase() + status.slice(1);
+    return status?.charAt(0)?.toUpperCase() + status?.slice(1);
   };
 
   return (

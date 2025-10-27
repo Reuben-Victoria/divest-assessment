@@ -1,4 +1,4 @@
-type StatusType = "paid" | "pending" | "draft";
+export type StatusType = "paid" | "pending" | "draft";
 type ThemeType = "light" | "dark";
 
 export interface Invoice {
@@ -19,8 +19,6 @@ export interface InvoiceDetails extends Invoice {
   total: number;
 }
 
-
-
 export interface InvoiceItem {
   name: string;
   quantity: number;
@@ -37,6 +35,7 @@ export interface Address {
 
 export interface InvoiceFormData {
   id?: string;
+  createdAt?: string;
   status?: StatusType;
   description: string;
   senderAddress: Address;
@@ -50,9 +49,3 @@ export interface InvoiceFormData {
   total?: number;
 }
 
-export interface InvoiceDetailData extends InvoiceFormData {
-  id: string;
-  status: StatusType;
-  paymentDue: string;
-  total: number;
-}

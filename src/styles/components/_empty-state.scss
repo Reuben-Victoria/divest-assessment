@@ -1,0 +1,43 @@
+@use "../based/variables" as *;
+@use "../based/functions" as *;
+.empty-state {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &_img {
+    object-fit: cover;
+  }
+
+  &_description {
+    margin-top: 60px;
+    text-align: center;
+    width: 100%;
+
+    h2 {
+      color: get-color("08");
+      margin-bottom: 16px;
+    }
+
+    p {
+      color: get-color("06");
+    }
+
+    span {
+      font-weight: bold;
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    h2 {
+      color: $white;
+    }
+    p {
+      color: get-color("05");
+    }
+  }
+}

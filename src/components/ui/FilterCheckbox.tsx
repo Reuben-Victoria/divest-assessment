@@ -18,7 +18,7 @@ const FilterCheckbox: React.FC<FilterCheckboxProps> = ({
   title = "Filter by status",
   options: initialOptions = [
     { value: "draft", label: "Draft", checked: false },
-    { value: "pending", label: "Pending", checked: true },
+    { value: "pending", label: "Pending", checked: false },
     { value: "paid", label: "Paid", checked: false },
   ],
   onChange,
