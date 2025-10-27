@@ -15,6 +15,7 @@ import {
   DatePicker,
   Dropdown,
 } from "@/components";
+import { toInvoiceFormData } from "@/utils/formatter";
 
 interface InvoiceFormModalProps {
   mode: "create" | "edit";
@@ -87,12 +88,14 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
     if (isValid) {
       const total = calculateInvoiceTotal(formData.items);
       const paymentDue = calculatePaymentDue(
-        formData.invoiceDate,
+        formData?.invoiceDate as string,
         formData.paymentTerms
       );
 
+      const formatInvoice = toInvoiceFormData(formData);
+
       const invoiceData: InvoiceFormData = {
-        ...formData,
+        ...formatInvoice,
         id: isEditMode && invoice ? invoice.id : generateInvoiceId(),
         status: isEditMode && invoice ? invoice.status : "pending",
         paymentDue,
@@ -112,12 +115,14 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
   const handleSaveAsDraft = async () => {
     const total = calculateInvoiceTotal(formData.items);
     const paymentDue = calculatePaymentDue(
-      formData.invoiceDate,
+      formData.invoiceDate as string,
       formData.paymentTerms
     );
 
+    const formatInvoice = toInvoiceFormData(formData);
+
     const invoiceData: InvoiceFormData = {
-      ...formData,
+      ...formatInvoice,
       id: generateInvoiceId(),
       status: "draft",
       paymentDue,
@@ -273,7 +278,7 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
                   fullWidth
                   name="invoiceDate"
                   label="Invoice Date"
-                  defaultValue={new Date(formData?.invoiceDate)}
+                  defaultValue={new Date(formData?.invoiceDate as string)}
                   value={
                     typeof formData.invoiceDate === "string"
                       ? new Date(formData.invoiceDate)

@@ -1,51 +1,23 @@
 {
   "invoices": [
     {
-      "description": "Website Redesign",
-      "senderAddress": {},
-      "clientName": "John Morrison",
-      "clientEmail": "jm@myco.com",
-      "clientAddress": {},
-      "paymentTerms": 7,
-      "items": [
-        {
-          "name": "Website Redesign",
-          "quantity": 1,
-          "price": 14002.33,
-          "total": 14002.33
-        },
-        {
-          "name": "Build Website",
-          "quantity": 3,
-          "price": 20,
-          "total": 60
-        }
-      ],
-      "total": 14062.33,
-      "status": "paid",
-      "id": "RG0314"
-    },
-    {
-      "id": "AA1449",
-      "createdAt": "2021-10-7",
-      "paymentDue": "2021-10-14",
       "description": "Re-branding",
-      "paymentTerms": 7,
-      "clientName": "Mellisa Clarke",
-      "clientEmail": "mellisa.clarke@example.com",
-      "status": "paid",
+      "paymentDue": "Invalid Date",
       "senderAddress": {
         "street": "19 Union Terrace",
         "city": "London",
         "postCode": "E1 3EZ",
         "country": "United Kingdom"
       },
+      "clientName": "Mellisa Clarke",
+      "clientEmail": "mellisa.clarke@example.com",
       "clientAddress": {
         "street": "46 Abbey Row",
         "city": "Cambridge",
         "postCode": "CB5 6EG",
         "country": "United Kingdom"
       },
+      "paymentTerms": 7,
       "items": [
         {
           "name": "New Logo",
@@ -60,7 +32,9 @@
           "total": 2500
         }
       ],
-      "total": 4032.33
+      "total": 4032.33,
+      "status": "paid",
+      "id": "AA1449"
     },
     {
       "id": "TY9141",
@@ -94,14 +68,23 @@
       "total": 6155.91
     },
     {
-      "id": "FV2353",
-      "createdAt": "16 Oct 2025",
+      "createdAt": "NaN-NaN-NaN",
       "description": "Logo Re-design",
-      "paymentDue": "30 Oct 2025",
-      "senderAddress": {},
+      "paymentDue": "Invalid Date",
+      "senderAddress": {
+        "street": "N165 Federal Low-cost Housing Estate. North Bank, Makurdi",
+        "city": "Makurdi",
+        "postCode": "970101",
+        "country": "Nigeria"
+      },
       "clientName": "Anita Wainwright",
       "clientEmail": "reubenvickie20@gmail.com",
-      "clientAddress": {},
+      "clientAddress": {
+        "street": "N165 Federal Low-cost Housing Estate. North Bank, Makurdi",
+        "city": "Makurdi",
+        "postCode": "970101",
+        "country": "Nigeria"
+      },
       "paymentTerms": 14,
       "items": [
         {
@@ -112,7 +95,38 @@
         }
       ],
       "total": 3102.04,
-      "status": "draft"
+      "status": "draft",
+      "id": "FV2353"
+    },
+    {
+      "description": "John's Designs",
+      "paymentDue": "Invalid Date",
+      "senderAddress": {
+        "street": "N165 Federal Low-cost Housing Estate. North Bank, Makurdi",
+        "city": "Makurdi",
+        "postCode": "970101",
+        "country": "Nigeria"
+      },
+      "clientName": "Home Grey",
+      "clientEmail": "reubenvickie20@gmail.com",
+      "clientAddress": {
+        "street": "Bariga, Lagos",
+        "city": "Lagos",
+        "postCode": "100223",
+        "country": "Nigeria"
+      },
+      "paymentTerms": 14,
+      "items": [
+        {
+          "name": "Designs",
+          "quantity": 1,
+          "price": 30,
+          "total": 30
+        }
+      ],
+      "total": 30,
+      "status": "draft",
+      "id": "YR0IE4"
     }
   ]
 }

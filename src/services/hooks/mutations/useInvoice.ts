@@ -53,3 +53,15 @@ export const useUpdateInvoice = (onSuccessCallback?: () => void) => {
     },
   });
 };
+
+export const useCreateInvoice = (onSuccessCallback?: () => void) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ invoice }: { invoice: InvoiceFormData }) =>
+      apiRequest<void>(`http://localhost:5000/invoices`, "POST", invoice),
+    onSuccess: () => {
+      onSuccessCallback?.();
+      queryClient.invalidateQueries({ queryKey: ["get-invoices"] });
+    },
+  });
+};

@@ -6,27 +6,32 @@ import type { Invoice } from "@/types";
 import InvoiceFormModal from "./InvoiceFormModal";
 import { useGetAllInvoices } from "@/services/hooks/queries/useInvoice";
 import EmptyState from "./EmptyState";
+import { useCreateInvoice } from "@/services/hooks/mutations/useInvoice";
 
 const InvoicesPage = () => {
   const [filters, setFilters] = useState<string[]>([]);
   const [isAddInvoiceModalOpen, setIsAddInvoiceModalOpen] = useState(false);
   const router = useRouter();
   const { data } = useGetAllInvoices();
-  const invoicesData: Invoice[] = useMemo(
-    () =>
-      data?.map((item) => ({
-        id: item?.id,
-        dueDate: item?.paymentDue,
-        clientName: item?.clientName,
-        amount: item?.total,
-        status: item?.status?.toLowerCase(),
-      })),
-    [data]
+  const { mutate: createInvoice } = useCreateInvoice(() =>
+    setIsAddInvoiceModalOpen(false)
   );
+  const invoicesData = useMemo(() => {
+    if (!Array.isArray(data)) return [];
 
+    return data.map((item) => ({
+      id: item?.id,
+      dueDate: item?.paymentDue,
+      clientName: item?.clientName,
+      amount: item?.total,
+      status: item?.status?.toLowerCase(),
+    }));
+  }, [data]);
   const filteredInvoices = useMemo(() => {
     if (filters.length === 0) return invoicesData;
-    return invoicesData?.filter((invoice) => filters.includes(invoice.status));
+    return invoicesData?.filter((invoice) =>
+      filters.includes(invoice?.status as string)
+    );
   }, [filters, invoicesData]);
 
   const handleFilterChange = useCallback((selectedFilters: string[]) => {
@@ -36,7 +41,7 @@ const InvoicesPage = () => {
   const handleNewInvoice = () => setIsAddInvoiceModalOpen(true);
 
   const handleInvoiceClick = (invoice: Invoice) => {
-    router.push(`/${invoice?.id}`)
+    router.push(`/${invoice?.id}`);
   };
 
   const newInvoiceIcon = (
@@ -75,7 +80,7 @@ const InvoicesPage = () => {
           {filteredInvoices?.map((invoice) => (
             <InvoiceCard
               key={invoice.id}
-              invoice={invoice}
+              invoice={invoice as Invoice}
               onClick={handleInvoiceClick}
             />
           ))}
@@ -88,7 +93,8 @@ const InvoicesPage = () => {
 
       <RenderIf condition={isAddInvoiceModalOpen}>
         <InvoiceFormModal
-          invoice={data!}
+          onSave={(invoice) => createInvoice({ invoice })}
+          invoice={undefined}
           mode="create"
           onClose={() => setIsAddInvoiceModalOpen(false)}
         />

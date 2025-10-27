@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDatePicker } from "@/hooks/useDatePicker";
 
 interface DatePickerProps {
@@ -14,7 +14,7 @@ interface DatePickerProps {
 
 const DatePicker: React.FC<DatePickerProps> = ({
   label = "Issue Date",
-  defaultValue = new Date(2021, 7, 21),
+  defaultValue = new Date("2021-07-21"),
   disabled = false,
   fullWidth = false,
   onChange,
@@ -33,7 +33,9 @@ const DatePicker: React.FC<DatePickerProps> = ({
     isOpen,
     setIsOpen,
     selectedDate,
+    setSelectedDate,
     currentMonth,
+    setCurrentMonth,
     datePickerRef,
     months,
     formatDate,
@@ -43,9 +45,17 @@ const DatePicker: React.FC<DatePickerProps> = ({
     renderCalendarDays,
   } = useDatePicker({ defaultValue: initialDate, onChange });
 
+  useEffect(() => {
+    if (value) {
+      const valueTime = value.getTime();
+      const selectedTime = selectedDate.getTime();
 
-
-  console.log(value, "VALUE");
+      if (valueTime !== selectedTime) {
+        setSelectedDate(value);
+        setCurrentMonth(value);
+      }
+    }
+  }, [value, selectedDate, setSelectedDate, setCurrentMonth]);
 
   const formatDateForInput = (date: Date) => {
     const year = date.getFullYear();
@@ -63,11 +73,13 @@ const DatePicker: React.FC<DatePickerProps> = ({
     >
       {label && <label className="datepicker__label">{label}</label>}
 
-      <input
-        type="hidden"
-        name={name}
-        value={formatDateForInput(selectedDate)}
-      />
+      {name && (
+        <input
+          type="hidden"
+          name={name}
+          value={formatDateForInput(selectedDate)}
+        />
+      )}
 
       <button
         type="button"
@@ -128,7 +140,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
                 />
               ) : (
                 <button
-                  key={day}
+                  key={`${currentMonth.getMonth()}-${day}-${index}`}
                   type="button"
                   className={`heading-s-v datepicker__day ${
                     selectedDate.getDate() === day &&

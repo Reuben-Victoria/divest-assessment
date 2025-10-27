@@ -42,7 +42,7 @@ export interface InvoiceFormData {
   clientName: string;
   clientEmail: string;
   clientAddress: Address;
-  invoiceDate: string;
+  invoiceDate?: string;
   paymentDue?: string;
   paymentTerms: number;
   items: InvoiceItem[];

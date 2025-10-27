@@ -108,6 +108,7 @@ export const useDatePicker = ({
     setSelectedDate,
     currentMonth,
     datePickerRef,
+    setCurrentMonth,
     months,
     formatDate,
     handlePrevMonth,

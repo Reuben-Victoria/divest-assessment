@@ -67,14 +67,15 @@ const InvoiceDetail = () => {
   const handleSaveEdit = (updatedInvoice: Partial<InvoiceFormData>) => {
     const editData = toInvoiceFormData(updatedInvoice);
 
-    console.log(updateInvoice, "UPDATED INVOICE");
+    console.log(editData, "EDIT DATE")
     updateInvoice({
       id: invoice?.id as string,
-      invoice: editData,
+      invoice: {
+        ...editData,
+        id: invoice?.id,
+        createdAt: updatedInvoice?.invoiceDate,
+      },
     });
-
-    console.log(editData, "EDIT DATA");
-
     return;
   };
 

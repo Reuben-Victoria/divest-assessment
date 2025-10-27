@@ -23,27 +23,28 @@ export const formatDate = (dateString: string, locale = "en-GB"): string => {
 };
 
 export function toInvoiceFormData(flatData: Record<string, any>) {
+
+    console.log(flatData.invoiceDate, "SHSH")
   return {
-    id: flatData?.id,
-    createdAt: formatDate(flatData.invoiceDate),
+    createdAt: flatData.invoiceDate,
     description: flatData.description,
     paymentDue: calculatePaymentDue(
       flatData.invoiceDate,
       Number(flatData.paymentTerms)
     ),
     senderAddress: {
-      street: flatData.senderAddress.senderStreet,
-      city: flatData.senderAddress.senderCity,
-      postCode: flatData.senderAddress.senderPostCode,
-      country: flatData.senderAddress.senderCountry,
+      street: flatData.senderAddress.street,
+      city: flatData.senderAddress.city,
+      postCode: flatData.senderAddress.postCode,
+      country: flatData.senderAddress.country,
     },
     clientName: flatData.clientName,
     clientEmail: flatData.clientEmail,
     clientAddress: {
-      street: flatData.clientAddress.clientStreet,
-      city: flatData.clientAddress.clientCity,
-      postCode: flatData.clientAddress.clientPostCode,
-      country: flatData.clientAddress.clientCountry,
+      street: flatData.clientAddress.street,
+      city: flatData.clientAddress.city,
+      postCode: flatData.clientAddress.postCode,
+      country: flatData.clientAddress.country,
     },
     paymentTerms: Number(flatData.paymentTerms),
     items: flatData.items,
