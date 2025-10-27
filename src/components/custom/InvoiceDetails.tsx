@@ -29,8 +29,9 @@ const InvoiceDetail = () => {
     () => router.push("/")
   );
 
-  const { mutate: updateInvoice, isPending: isUpdatingInvoice } =
-    useUpdateInvoice(() => setIsEditModalOpen(false));
+  const { mutate: updateInvoice } = useUpdateInvoice(() =>
+    setIsEditModalOpen(false)
+  );
 
   const { mutate: updateInvoiceStatus, isPending: isUpdatingStatus } =
     useUpdateInvoiceStatus();
@@ -64,10 +65,17 @@ const InvoiceDetail = () => {
   };
 
   const handleSaveEdit = (updatedInvoice: Partial<InvoiceFormData>) => {
+    const editData = toInvoiceFormData(updatedInvoice);
+
+    console.log(updateInvoice, "UPDATED INVOICE");
     updateInvoice({
       id: invoice?.id as string,
-      invoice: toInvoiceFormData(updatedInvoice),
+      invoice: editData,
     });
+
+    console.log(editData, "EDIT DATA");
+
+    return;
   };
 
   return (

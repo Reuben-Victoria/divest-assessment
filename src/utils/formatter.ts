@@ -1,4 +1,4 @@
-import type { InvoiceFormData} from "@/types";
+import { calculatePaymentDue } from "./invoiceHelper";
 
 export const formatCurrency = (
   amount: number,
@@ -22,27 +22,29 @@ export const formatDate = (dateString: string, locale = "en-GB"): string => {
   }).format(date);
 };
 
-export function toInvoiceFormData(
-  flatData: Record<string, any>
-): InvoiceFormData {
+export function toInvoiceFormData(flatData: Record<string, any>) {
   return {
-    createdAt: flatData.invoiceDate,
+    id: flatData?.id,
+    createdAt: formatDate(flatData.invoiceDate),
     description: flatData.description,
+    paymentDue: calculatePaymentDue(
+      flatData.invoiceDate,
+      Number(flatData.paymentTerms)
+    ),
     senderAddress: {
-      street: flatData.senderStreet,
-      city: flatData.senderCity,
-      postCode: flatData.senderPostCode,
-      country: flatData.senderCountry,
+      street: flatData.senderAddress.senderStreet,
+      city: flatData.senderAddress.senderCity,
+      postCode: flatData.senderAddress.senderPostCode,
+      country: flatData.senderAddress.senderCountry,
     },
     clientName: flatData.clientName,
     clientEmail: flatData.clientEmail,
     clientAddress: {
-      street: flatData.clientStreet,
-      city: flatData.clientCity,
-      postCode: flatData.clientPostCode,
-      country: flatData.clientCountry,
+      street: flatData.clientAddress.clientStreet,
+      city: flatData.clientAddress.clientCity,
+      postCode: flatData.clientAddress.clientPostCode,
+      country: flatData.clientAddress.clientCountry,
     },
-    invoiceDate: flatData.invoiceDate,
     paymentTerms: Number(flatData.paymentTerms),
     items: flatData.items,
     total: flatData.total ?? 0,

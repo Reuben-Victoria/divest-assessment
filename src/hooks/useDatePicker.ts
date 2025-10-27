@@ -63,7 +63,7 @@ export const useDatePicker = ({
     return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
   }, []);
 
-  // --- Navigation
+
   const handlePrevMonth = () => {
     setCurrentMonth(
       new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1)
@@ -86,6 +86,8 @@ export const useDatePicker = ({
     setSelectedDate(newDate);
     setIsOpen(false);
     onChange?.(newDate);
+
+    // console.log()
   };
 
   const renderCalendarDays = useCallback(() => {
@@ -103,6 +105,7 @@ export const useDatePicker = ({
     isOpen,
     setIsOpen,
     selectedDate,
+    setSelectedDate,
     currentMonth,
     datePickerRef,
     months,

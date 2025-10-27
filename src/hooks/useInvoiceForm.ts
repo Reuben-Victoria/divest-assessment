@@ -19,12 +19,12 @@ export const useInvoiceForm = (initialData: InvoiceFormData) => {
     clientCity: formData.clientAddress.city,
     clientPostCode: formData.clientAddress.postCode,
     clientCountry: formData.clientAddress.country,
-    invoiceDate: formData?.createdAt,
+    invoiceDate: formData?.invoiceDate,
     paymentTerms: formData.paymentTerms,
     description: formData.description,
     items: formData.items,
   });
-  
+
   const validateForm = async (): Promise<boolean> => {
     try {
       await invoiceValidationSchema.validate(getFlattenedFormData(), {
@@ -69,13 +69,20 @@ export const useInvoiceForm = (initialData: InvoiceFormData) => {
     field: K,
     value: InvoiceFormData[T][K]
   ): void => {
-    setFormData((prev) => ({
-      ...prev,
-      [type]: {
-        ...prev[type],
-        [field]: value,
-      },
-    }));
+    console.log("handleAddressChange called:", { type, field, value });
+    console.log("Previous formData:", formData);
+
+    setFormData((prev) => {
+      const newData = {
+        ...prev,
+        [type]: {
+          ...prev[type],
+          [field]: value,
+        },
+      };
+      console.log("New formData:", newData);
+      return newData;
+    });
 
     const errorKey =
       type === "senderAddress"
@@ -84,7 +91,6 @@ export const useInvoiceForm = (initialData: InvoiceFormData) => {
 
     clearError(errorKey);
   };
-
 
   const handleItemChange = <K extends keyof InvoiceItem>(
     index: number,

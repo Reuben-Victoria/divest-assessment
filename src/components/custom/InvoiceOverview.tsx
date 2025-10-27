@@ -88,7 +88,7 @@ const InvoicesPage = () => {
 
       <RenderIf condition={isAddInvoiceModalOpen}>
         <InvoiceFormModal
-          invoice={data}
+          invoice={data!}
           mode="create"
           onClose={() => setIsAddInvoiceModalOpen(false)}
         />

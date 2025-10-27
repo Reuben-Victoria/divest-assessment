@@ -43,7 +43,10 @@ const DatePicker: React.FC<DatePickerProps> = ({
     renderCalendarDays,
   } = useDatePicker({ defaultValue: initialDate, onChange });
 
-  // Format date as YYYY-MM-DD for form submission
+
+
+  console.log(value, "VALUE");
+
   const formatDateForInput = (date: Date) => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");

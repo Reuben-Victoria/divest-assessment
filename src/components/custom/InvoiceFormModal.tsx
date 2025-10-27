@@ -273,10 +273,15 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
                   fullWidth
                   name="invoiceDate"
                   label="Invoice Date"
-                  defaultValue={new Date(formData.invoiceDate)}
-                  onChange={(value) =>
-                    handleInputChange("invoiceDate", value.toISOString())
+                  defaultValue={new Date(formData?.invoiceDate)}
+                  value={
+                    typeof formData.invoiceDate === "string"
+                      ? new Date(formData.invoiceDate)
+                      : formData.invoiceDate
                   }
+                  onChange={(newDate) => {
+                    handleInputChange("invoiceDate", newDate.toISOString());
+                  }}
                 />
                 {errors.invoiceDate && (
                   <span className="textinput__error">{errors.invoiceDate}</span>
@@ -286,6 +291,7 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
                 <Dropdown
                   fullWidth
                   label="Payment Terms"
+                  defaultValue={formData?.paymentTerms?.toString()}
                   onChange={(value) =>
                     handleInputChange("paymentTerms", parseInt(value))
                   }
