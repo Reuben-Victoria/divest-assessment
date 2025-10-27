@@ -246,7 +246,10 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
             {/* Invoice Details */}
             <div className="form-row-one">
               <DatePicker
+                fullWidth
+                name="invoiceDate"
                 label="Invoice Date"
+                defaultValue={new Date(formData.invoiceDate)}
                 onChange={(value) => handleInputChange("invoiceDate", value)}
               />
               {errors.invoiceDate && (

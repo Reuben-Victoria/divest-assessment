@@ -19,7 +19,7 @@ export const useInvoiceForm = (initialData: InvoiceFormData) => {
     clientCity: formData.clientAddress.city,
     clientPostCode: formData.clientAddress.postCode,
     clientCountry: formData.clientAddress.country,
-    invoiceDate: formData.invoiceDate,
+    invoiceDate: formData?.createdAt,
     paymentTerms: formData.paymentTerms,
     description: formData.description,
     items: formData.items,
@@ -86,7 +86,7 @@ export const useInvoiceForm = (initialData: InvoiceFormData) => {
     clearError(errorKey);
   };
 
-  // --- Handle invoice item field changes ---
+
   const handleItemChange = <K extends keyof InvoiceItem>(
     index: number,
     field: K,

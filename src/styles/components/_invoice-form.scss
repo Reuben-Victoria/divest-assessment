@@ -1,6 +1,7 @@
 @use "../../styles/based/variables" as *;
 @use "../../styles/based/functions" as *;
 @use "../../styles/based/mixins" as *;
+@use "../components/input" as *;
 
 .invoice-form-modal {
   position: fixed;
@@ -37,7 +38,12 @@
   }
 
   &__header {
+    // margin-top: 120px;
     padding: 28px 56px 18px;
+
+    // @include mobile {
+    //   margin-top: 100px;
+    // }
   }
 
   &__title {
@@ -56,6 +62,7 @@
     overflow-y: auto;
     height: 100vh;
     display: flex;
+    padding-bottom: 100px;
     flex-direction: column;
     padding: 24px 56px;
     overflow-x: hidden;
@@ -88,7 +95,7 @@
     }
 
     &-one {
-      margin-bottom: 200px;
+      margin-bottom: 300px;
 
       &-title {
         font-size: 15px;
@@ -102,10 +109,8 @@
   &__footer {
     padding: 20px 56px;
     background-color: var(--modal-footer-bg);
-    position: absolute;
+    position: sticky;
     bottom: 0;
-    left: 0;
-    right: 0;
     display: flex;
     justify-content: space-between;
     gap: 16px;
@@ -225,6 +230,14 @@
   align-items: end;
   margin-bottom: 18px;
 
+  .textinput {
+    margin-bottom: 0px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
   &__delete {
     width: 40px;
     height: 48px;
@@ -248,29 +261,18 @@
   }
 
   @include mobile {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-    gap: 16px;
-
-    .form-field:nth-child(1) {
-      grid-column: 1;
-    }
-
-    .form-field:nth-child(2) {
-      grid-column: 1;
-    }
-
-    .form-field:nth-child(3) {
-      grid-column: 2;
-    }
+    grid-template-columns: 1fr 0.2fr 0.5fr auto 24px;
+    gap: 8px;
 
     .form-field:nth-child(4) {
-      grid-column: 1;
+      grid-column: 4;
+      grid-row: 1;
+      text-wrap: no-wrap;
     }
 
     &__delete {
-      grid-column: 2;
-      justify-self: end;
+      grid-column: 5;
+      grid-row: 1;
     }
   }
 }
@@ -320,6 +322,17 @@
   --btn-add-item-bg: #f9fafe;
   --btn-add-item-text: #7e88c3;
   --btn-add-item-hover: #dfe3fa;
+  --text-primary: #{get-color("08")};
+  --text-secondary: #{get-color("07")};
+  --text-placeholder: #a0a0a0;
+  --text-error: #{get-color("09")};
+
+  --input-background: #ffffff;
+  --input-background-filled: #f8f9fc;
+
+  --border-default: #{get-color("05")};
+  --border-active: #{get-color("01")};
+  --border-error: #{get-color("09")};
 }
 
 @media (prefers-color-scheme: dark) {
@@ -331,11 +344,31 @@
     --btn-add-item-bg: #252945;
     --btn-add-item-text: #dfe3fa;
     --btn-add-item-hover: #1e2139;
+    --text-primary: #ffffff;
+    --text-secondary: #8e92bc;
+    --text-placeholder: #6b7280;
+    --text-error: #{get-color("10")};
+    --input-background: #{get-color("03")};
+    --input-background-filled: #252946;
+    --border-default: #{get-color("04")};
+    --border-active: #{get-color("05")};
+    --border-error: #{get-color("10")};
   }
 }
 
-// Dark Mode
+// Dark Mode Variables
 [data-theme="dark"] {
+  --text-primary: #ffffff;
+  --text-secondary: #{get-color("05")};
+  --text-placeholder: #6b7280;
+  --text-error: #{get-color("09")};
+
+  --input-background: #{get-color("03")};
+  --input-background-filled: #252946;
+
+  --border-default: #{get-color("04")};
+  --border-active: #{get-color("01")};
+  --border-error: #{get-color("09")};
   --modal-background: #141625;
   --modal-footer-bg: #1e2139;
   --scrollbar-thumb: #252945;
@@ -343,4 +376,12 @@
   --btn-add-item-bg: #252945;
   --btn-add-item-text: #dfe3fa;
   --btn-add-item-hover: #1e2139;
+}
+
+.textinput {
+  margin-bottom: 24px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }

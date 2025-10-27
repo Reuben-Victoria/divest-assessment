@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React from "react";
 import { useDatePicker } from "@/hooks/useDatePicker";
 
@@ -8,6 +8,8 @@ interface DatePickerProps {
   disabled?: boolean;
   fullWidth?: boolean;
   onChange?: (date: Date) => void;
+  name?: string;
+  value?: Date;
 }
 
 const DatePicker: React.FC<DatePickerProps> = ({
@@ -16,7 +18,17 @@ const DatePicker: React.FC<DatePickerProps> = ({
   disabled = false,
   fullWidth = false,
   onChange,
+  name,
+  value,
 }) => {
+  const normalizedDefaultValue =
+    typeof defaultValue === "string" ? new Date(defaultValue) : defaultValue;
+  const safeDefaultDate = isNaN(normalizedDefaultValue.getTime())
+    ? new Date()
+    : normalizedDefaultValue;
+
+  const initialDate = value || safeDefaultDate;
+
   const {
     isOpen,
     setIsOpen,
@@ -29,7 +41,15 @@ const DatePicker: React.FC<DatePickerProps> = ({
     handleNextMonth,
     handleDateSelect,
     renderCalendarDays,
-  } = useDatePicker({ defaultValue, onChange });
+  } = useDatePicker({ defaultValue: initialDate, onChange });
+
+  // Format date as YYYY-MM-DD for form submission
+  const formatDateForInput = (date: Date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
 
   return (
     <div
@@ -40,14 +60,29 @@ const DatePicker: React.FC<DatePickerProps> = ({
     >
       {label && <label className="datepicker__label">{label}</label>}
 
+      <input
+        type="hidden"
+        name={name}
+        value={formatDateForInput(selectedDate)}
+      />
+
       <button
         type="button"
-        className={`datepicker__input ${isOpen ? "datepicker__input--active" : ""}`}
+        className={`datepicker__input ${
+          isOpen ? "datepicker__input--active" : ""
+        }`}
         onClick={() => !disabled && setIsOpen(!isOpen)}
         disabled={disabled}
       >
-        <span className="datepicker__input-text">{formatDate(selectedDate)}</span>
-        <svg className="datepicker__input-icon" width="16" height="16" viewBox="0 0 16 16">
+        <span className="datepicker__input-text">
+          {formatDate(selectedDate)}
+        </span>
+        <svg
+          className="datepicker__input-icon"
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+        >
           <path
             d="M14 2H13V1C13 0.734784 12.8946 0.48043 12.7071 0.292893C12.5196 0.105357 12.2652 0 12 0C11.7348 0 11.4804 0.105357 11.2929 0.292893C11.1054 0.48043 11 0.734784 11 1V2H5V1C5 0.734784 4.89464 0.48043 4.70711 0.292893C4.51957 0.105357 4.26522 0 4 0C3.73478 0 3.48043 0.105357 3.29289 0.292893C3.10536 0.48043 3 0.734784 3 1V2H2C1.46957 2 0.960859 2.21071 0.585786 2.58579C0.210714 2.96086 0 3.46957 0 4V14C0 14.5304 0.210714 15.0391 0.585786 15.4142C0.960859 15.7893 1.46957 16 2 16H14C14.5304 16 15.0391 15.7893 15.4142 15.4142C15.7893 15.0391 16 14.5304 16 14V4C16 3.46957 15.7893 2.96086 15.4142 2.58579C15.0391 2.21071 14.5304 2 14 2ZM14 14H2V7H14V14Z"
             fill="currentColor"
@@ -84,7 +119,10 @@ const DatePicker: React.FC<DatePickerProps> = ({
           <div className="datepicker__grid">
             {renderCalendarDays().map((day, index) =>
               day === null ? (
-                <div key={`empty-${index}`} className="datepicker__day datepicker__day--empty" />
+                <div
+                  key={`empty-${index}`}
+                  className="datepicker__day datepicker__day--empty"
+                />
               ) : (
                 <button
                   key={day}

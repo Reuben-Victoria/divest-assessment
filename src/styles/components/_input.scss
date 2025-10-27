@@ -37,11 +37,6 @@
       font-weight: 400;
     }
 
- 
-    &:not(&--filled):not(&--active) {
-      background-color: var(--input-background);
-    }
-
     &--filled {
       background-color: var(--input-background-filled);
     }
@@ -91,7 +86,7 @@
   --border-error: #{get-color("09")};
 }
 
-// Dark Mode Variables
+
 [data-theme="dark"] {
   --text-primary: #ffffff;
   --text-secondary: #{get-color("05")};
