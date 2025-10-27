@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { InvoiceFormData } from "@/types";
 import { useInvoiceForm } from "@/hooks/useInvoiceForm";
 import {
@@ -30,6 +30,7 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
   onSave,
 }) => {
   const isEditMode = mode === "edit";
+  const modalBodyRef = useRef<HTMLDivElement>(null);
 
   const {
     formData,
@@ -50,6 +51,32 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
       document.body.style.overflow = "unset";
     };
   }, []);
+
+  const scrollToFirstError = () => {
+    if (!modalBodyRef.current) return;
+
+    const firstErrorElement =
+      modalBodyRef.current.querySelector(".textinput__error");
+
+    if (firstErrorElement) {
+      const errorParent =
+        firstErrorElement.closest(".textinput") ||
+        firstErrorElement.closest(".form-field");
+
+      if (errorParent) {
+        const modalBody = modalBodyRef.current;
+        const errorRect = (errorParent as HTMLElement).getBoundingClientRect();
+        const modalRect = modalBody.getBoundingClientRect();
+
+        const scrollPosition =
+          modalBody.scrollTop + errorRect.top - modalRect.top - 20;
+        modalBody.scrollTo({
+          top: scrollPosition,
+          behavior: "smooth",
+        });
+      }
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,13 +101,9 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
 
       onSave(invoiceData);
     } else {
-      const firstErrorElement = document.querySelector(".textinput__error");
-      if (firstErrorElement) {
-        firstErrorElement.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-      }
+      setTimeout(() => {
+        scrollToFirstError();
+      }, 100);
     }
 
     setIsSubmitting(false);
@@ -120,7 +143,7 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
         </div>
 
         <form onSubmit={handleSubmit}>
-          <div className="invoice-form-modal__body">
+          <div className="invoice-form-modal__body" ref={modalBodyRef}>
             {/* Bill From Section */}
             <div className="invoice-form-modal__section">
               <h3 className="invoice-form-modal__section-title">Bill From</h3>
@@ -251,7 +274,9 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
                   name="invoiceDate"
                   label="Invoice Date"
                   defaultValue={new Date(formData.invoiceDate)}
-                  onChange={(value) => handleInputChange("invoiceDate", value)}
+                  onChange={(value) =>
+                    handleInputChange("invoiceDate", value.toISOString())
+                  }
                 />
                 {errors.invoiceDate && (
                   <span className="textinput__error">{errors.invoiceDate}</span>
@@ -261,7 +286,9 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
                 <Dropdown
                   fullWidth
                   label="Payment Terms"
-                  onChange={(value) => handleInputChange("paymentTerms", value)}
+                  onChange={(value) =>
+                    handleInputChange("paymentTerms", parseInt(value))
+                  }
                 />
                 {errors.paymentTerms && (
                   <span className="textinput__error">
@@ -281,7 +308,7 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
             />
 
             {/* Item List */}
-            <div className="invoice-form-modal__section-one ">
+            <div className="invoice-form-modal__section-one">
               <h3 className="invoice-form-modal__section-title">Item List</h3>
 
               {formData.items.map((item, index) => (
@@ -300,7 +327,11 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
                     type="number"
                     value={item.quantity.toString()}
                     onChange={(e) =>
-                      handleItemChange(index, "quantity", e.target.value)
+                      handleItemChange(
+                        index,
+                        "quantity",
+                        parseInt(e.target.value) || 0
+                      )
                     }
                     error={errors[`items.${index}.quantity`]}
                     className="form-field--small"
@@ -311,7 +342,11 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
                     step="0.01"
                     value={item.price.toString()}
                     onChange={(e) =>
-                      handleItemChange(index, "price", e.target.value)
+                      handleItemChange(
+                        index,
+                        "price",
+                        parseFloat(e.target.value) || 0
+                      )
                     }
                     error={errors[`items.${index}.price`]}
                   />

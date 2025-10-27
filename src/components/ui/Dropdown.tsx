@@ -17,12 +17,12 @@ interface DropdownProps {
 const Dropdown: React.FC<DropdownProps> = ({
   label = "Payment Terms",
   options = [
-    { value: "net1", label: "Net 1 Day" },
-    { value: "net7", label: "Net 7 Days" },
-    { value: "net14", label: "Net 14 Days" },
-    { value: "net30", label: "Net 30 Days" },
+    { value: "1", label: "Net 1 Day" },
+    { value: "7", label: "Net 7 Days" },
+    { value: "14", label: "Net 14 Days" },
+    { value: "30", label: "Net 30 Days" },
   ],
-  defaultValue = "net30",
+  defaultValue = "30",
   fullWidth = false,
   onChange,
 }) => {

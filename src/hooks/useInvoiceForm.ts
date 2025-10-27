@@ -24,8 +24,7 @@ export const useInvoiceForm = (initialData: InvoiceFormData) => {
     description: formData.description,
     items: formData.items,
   });
-
-  // --- Validate the entire form using Yup ---
+  
   const validateForm = async (): Promise<boolean> => {
     try {
       await invoiceValidationSchema.validate(getFlattenedFormData(), {
