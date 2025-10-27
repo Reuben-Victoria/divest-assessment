@@ -18,7 +18,7 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({
   return (
     <div className={`status-badge status-badge--${status} ${className}`}>
       <span className="status-badge__dot"></span>
-      <span className="status-badge__text">{getStatusLabel(status)}</span>
+      <span className="status-badge__text">{getStatusLabel(status || "")}</span>
     </div>
   );
 };

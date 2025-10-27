@@ -21,6 +21,8 @@
     padding: 2rem 0;
     display: flex;
     margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
     align-items: center;
     flex-direction: column;
     overflow-y: auto;
@@ -31,11 +33,13 @@
 @include tablet {
   .layout {
     flex-direction: column;
+    width: 100%;
 
     &__content {
       flex: 1;
       display: flex;
       padding-top: 102px;
+      width: 100%;
       padding-left: 0px !important;
       flex-direction: column;
       overflow: hidden;
@@ -44,7 +48,7 @@
     &__container {
       padding: 1.5rem 3rem;
       margin: 0 0;
-      align-items: normal;
+      width: 100%;
     }
   }
 }

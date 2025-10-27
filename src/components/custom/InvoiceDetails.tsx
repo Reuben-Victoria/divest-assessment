@@ -1,12 +1,15 @@
 "use client";
 import { useMemo, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { StatusBadge, Button } from "@/components";
+import { StatusBadge, Button, RenderIf } from "@/components";
 import InvoiceFormModal from "./InvoiceFormModal";
 import DeleteModal from "./DeleteInvoiceModal";
 import { useGetInvoiceById } from "@/services/hooks/queries/useInvoice";
 import { StatusType } from "@/types";
-import { useDeleteInvoice } from "@/services/hooks/mutations/useInvoice";
+import {
+  useDeleteInvoice,
+  useUpdateInvoiceStatus,
+} from "@/services/hooks/mutations/useInvoice";
 export interface InvoiceItem {
   name: string;
   quantity: number;
@@ -20,9 +23,12 @@ const InvoiceDetail = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const { data } = useGetInvoiceById({ id: id as string });
 
-  const { mutate: deleteInvoice } = useDeleteInvoice(() =>
-    router.push("/")
+  const { mutate: deleteInvoice, isPending: isDeleting } = useDeleteInvoice(
+    () => router.push("/")
   );
+
+  const { mutate: updateInvoiceStatus, isPending: isUpdatingStatus } =
+    useUpdateInvoiceStatus();
 
   const invoice = useMemo(() => data, [data]);
 
@@ -46,9 +52,10 @@ const InvoiceDetail = () => {
   };
 
   const handleMarkAsPaid = () => {
-    // if (onMarkAsPaid) {
-    //   onMarkAsPaid(invoice.id);
-    // }
+    updateInvoiceStatus({
+      id: id as string,
+      invoice: { ...invoice, status: "paid" },
+    });
   };
 
   const handleSaveEdit = (updatedInvoice) => {
@@ -81,11 +88,11 @@ const InvoiceDetail = () => {
             <Button variant="danger" onClick={handleDelete}>
               Delete
             </Button>
-            {invoice?.status !== "paid" && (
+            <RenderIf condition={invoice?.status === "pending"}>
               <Button variant="primary" onClick={handleMarkAsPaid}>
-                Mark as Paid
+                {isUpdatingStatus ? "Updating" : "Mark as Paid"}
               </Button>
-            )}
+            </RenderIf>
           </div>
         </div>
 
@@ -101,10 +108,10 @@ const InvoiceDetail = () => {
               </p>
             </div>
             <div className="invoice-detail__sender-address">
-              <p>{invoice?.senderAddress.street}</p>
-              <p>{invoice?.senderAddress.city}</p>
-              <p>{invoice?.senderAddress.postCode}</p>
-              <p>{invoice?.senderAddress.country}</p>
+              <p>{invoice?.senderAddress?.street}</p>
+              <p>{invoice?.senderAddress?.city}</p>
+              <p>{invoice?.senderAddress?.postCode}</p>
+              <p>{invoice?.senderAddress?.country}</p>
             </div>
           </div>
 
@@ -131,10 +138,10 @@ const InvoiceDetail = () => {
                   {invoice?.clientName}
                 </p>
                 <div className="invoice-detail__client-address">
-                  <p>{invoice?.clientAddress.street}</p>
-                  <p>{invoice?.clientAddress.city}</p>
-                  <p>{invoice?.clientAddress.postCode}</p>
-                  <p>{invoice?.clientAddress.country}</p>
+                  <p>{invoice?.clientAddress?.street}</p>
+                  <p>{invoice?.clientAddress?.city}</p>
+                  <p>{invoice?.clientAddress?.postCode}</p>
+                  <p>{invoice?.clientAddress?.country}</p>
                 </div>
               </div>
             </div>
@@ -157,7 +164,7 @@ const InvoiceDetail = () => {
               <span className="invoice-detail__items-total">Total</span>
             </div>
 
-            {invoice?.items.map((item, index) => (
+            {invoice?.items?.map((item, index) => (
               <div key={index} className="invoice-detail__item">
                 <span className="invoice-detail__item-name">{item?.name}</span>
                 <span className="invoice-detail__item-qty">
@@ -188,30 +195,32 @@ const InvoiceDetail = () => {
           <Button variant="danger" onClick={handleDelete}>
             Delete
           </Button>
-          {invoice?.status !== "paid" && (
+
+          <RenderIf condition={invoice?.status === "pending"}>
             <Button variant="primary" onClick={handleMarkAsPaid}>
-              Mark as Paid
+              {isUpdatingStatus ? "Updating" : "Mark as Paid"}
             </Button>
-          )}
+          </RenderIf>
         </div>
       </div>
 
-      {isEditModalOpen && (
+      <RenderIf condition={isEditModalOpen}>
         <InvoiceFormModal
           mode="edit"
           invoice={invoice}
           onClose={() => setIsEditModalOpen(false)}
           onSave={handleSaveEdit}
         />
-      )}
+      </RenderIf>
 
-      {isDeleteModalOpen && (
+      <RenderIf condition={isDeleteModalOpen}>
         <DeleteModal
+          isSubmitting={isDeleting}
           invoiceId={invoice?.id as string}
           onClose={() => setIsDeleteModalOpen(false)}
           onConfirm={handleConfirmDelete}
         />
-      )}
+      </RenderIf>
     </>
   );
 };

@@ -4,7 +4,6 @@
 
 .invoice-detail {
   width: 100%;
- 
 
   &__back {
     display: flex;
@@ -124,14 +123,14 @@
   }
 
   &__info-value {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
     color: var(--text-primary);
     margin: 0;
   }
 
   &__client-address {
-    margin-top: 12px;
+    margin-top: 0px;
     font-size: 13px;
     font-weight: 500;
     color: var(--text-secondary);
@@ -170,8 +169,8 @@
   &__item {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 16px;
-    padding: 0 20px 20px;
+    gap: 12px;
+    padding: 0 18px 18px;
     font-size: 15px;
     font-weight: 700;
     color: var(--text-primary);
@@ -292,8 +291,14 @@
       justify-content: space-between;
       width: 100%;
     }
+
     &__sender-address {
       text-align: left;
+    }
+
+    &__info {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
     }
 
     &__status-bar {
@@ -318,10 +323,7 @@
       padding: 18px;
     }
 
-    &__info {
-      grid-template-columns: 1fr;
-      gap: 18px;
-    }
+  
 
     &__amount-value {
       font-size: 20px;

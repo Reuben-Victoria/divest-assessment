@@ -32,37 +32,6 @@
       "total": 14002.33
     },
     {
-      "id": "RT2080",
-      "createdAt": "2021-10-11",
-      "paymentDue": "2021-10-12",
-      "description": "Logo Concept",
-      "paymentTerms": 1,
-      "clientName": "Alysa Werner",
-      "clientEmail": "alysa@email.co.uk",
-      "status": "pending",
-      "senderAddress": {
-        "street": "19 Union Terrace",
-        "city": "London",
-        "postCode": "E1 3EZ",
-        "country": "United Kingdom"
-      },
-      "clientAddress": {
-        "street": "63 Warwick Road",
-        "city": "Carlisle",
-        "postCode": "CA20 2TG",
-        "country": "United Kingdom"
-      },
-      "items": [
-        {
-          "name": "Logo Sketches",
-          "quantity": 1,
-          "price": 102.04,
-          "total": 102.04
-        }
-      ],
-      "total": 102.04
-    },
-    {
       "id": "AA1449",
       "createdAt": "2021-10-7",
       "paymentDue": "2021-10-14",
@@ -70,7 +39,7 @@
       "paymentTerms": 7,
       "clientName": "Mellisa Clarke",
       "clientEmail": "mellisa.clarke@example.com",
-      "status": "pending",
+      "status": "paid",
       "senderAddress": {
         "street": "19 Union Terrace",
         "city": "London",
@@ -107,7 +76,7 @@
       "paymentTerms": 30,
       "clientName": "Thomas Wayne",
       "clientEmail": "thomas@dc.com",
-      "status": "pending",
+      "status": "paid",
       "senderAddress": {
         "street": "19 Union Terrace",
         "city": "London",
