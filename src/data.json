@@ -253,6 +253,37 @@
       "total": 10,
       "status": "pending",
       "id": "SK604K"
+    },
+    {
+      "id": "PUYTEQ",
+      "createdAt": "15 Oct 2025",
+      "description": "Loveworld",
+      "paymentDue": "14 Nov 2025",
+      "senderAddress": {
+        "street": "Bariga, Lagos",
+        "city": "Lagos",
+        "postCode": "100223",
+        "country": "Nigeria"
+      },
+      "clientName": "Joeburg",
+      "clientEmail": "reubenvickie20@gmail.com",
+      "clientAddress": {
+        "street": "Bariga",
+        "city": "Shomulu",
+        "postCode": "100223",
+        "country": "Nigeria"
+      },
+      "paymentTerms": 30,
+      "items": [
+        {
+          "name": "Jovi",
+          "quantity": 1,
+          "price": 89,
+          "total": 89
+        }
+      ],
+      "total": 89,
+      "status": "draft"
     }
   ]
 }

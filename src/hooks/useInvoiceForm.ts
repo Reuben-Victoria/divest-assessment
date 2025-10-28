@@ -2,6 +2,7 @@ import { useState } from "react";
 import * as Yup from "yup";
 import { InvoiceFormData, InvoiceItem } from "@/types";
 import { invoiceValidationSchema, FormErrors } from "@/utils/invoiceValidation";
+import { normalizeDate } from "@/utils/formatter";
 
 export const useInvoiceForm = (initialData: InvoiceFormData) => {
   const [formData, setFormData] = useState<InvoiceFormData>(initialData);
@@ -19,7 +20,7 @@ export const useInvoiceForm = (initialData: InvoiceFormData) => {
     clientCity: formData.clientAddress.city,
     clientPostCode: formData.clientAddress.postCode,
     clientCountry: formData.clientAddress.country,
-    invoiceDate: formData?.invoiceDate || formData?.createdAt,
+    invoiceDate: normalizeDate(formData?.createdAt),
     paymentTerms: formData.paymentTerms,
     description: formData.description,
     items: formData.items,

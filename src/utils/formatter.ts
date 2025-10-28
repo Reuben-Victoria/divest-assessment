@@ -24,7 +24,11 @@ export const formatDate = (dateString: string, locale = "en-GB"): string => {
 
 export const normalizeDate = (date: string | Date | undefined): string => {
   if (!date) {
-    return new Date().toISOString().split("T")[0];
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
   }
 
   let dateObj: Date;
@@ -33,17 +37,28 @@ export const normalizeDate = (date: string | Date | undefined): string => {
     if (/^\d{1,2}\s\w{3,9}\s\d{4}$/.test(date)) {
       const months: { [key: string]: number } = {
         Jan: 0,
+        January: 0,
         Feb: 1,
+        February: 1,
         Mar: 2,
+        March: 2,
         Apr: 3,
+        April: 3,
         May: 4,
         Jun: 5,
+        June: 5,
         Jul: 6,
+        July: 6,
         Aug: 7,
+        August: 7,
         Sep: 8,
+        September: 8,
         Oct: 9,
+        October: 9,
         Nov: 10,
+        November: 10,
         Dec: 11,
+        December: 11,
       };
 
       const parts = date.split(" ");
@@ -53,9 +68,12 @@ export const normalizeDate = (date: string | Date | undefined): string => {
 
       dateObj = new Date(year, month, day);
     } else if (date.includes("T")) {
-      dateObj = new Date(date);
+      const cleanDate = date.split("T")[0];
+      const [year, month, day] = cleanDate.split("-").map(Number);
+      dateObj = new Date(year, month - 1, day);
     } else if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-      dateObj = new Date(date + "T00:00:00");
+      const [year, month, day] = date.split("-").map(Number);
+      dateObj = new Date(year, month - 1, day);
     } else {
       dateObj = new Date(date);
     }
@@ -75,7 +93,7 @@ export const normalizeDate = (date: string | Date | undefined): string => {
   return `${year}-${month}-${day}`;
 };
 
-const parseDayMonthYearFormat = (dateString: string): Date => {
+export const parseDayMonthYearFormat = (dateString: string): Date => {
   const months: { [key: string]: number } = {
     Jan: 0,
     January: 0,
@@ -149,6 +167,8 @@ export const formatDateForAPI = (dateString: string): string => {
 
 export function toInvoiceFormData(flatData: Record<string, any>) {
   const normalizedInvoiceDate = normalizeDate(flatData.invoiceDate);
+
+  console.log(normalizeDate(flatData.invoiceDate))
   return {
     createdAt: formatDateForDisplay(normalizedInvoiceDate),
     description: flatData.description,

@@ -76,7 +76,6 @@ export const useDatePicker = ({
     );
   };
 
-  // --- Selecting a date
   const handleDateSelect = (day: number) => {
     const newDate = new Date(
       currentMonth.getFullYear(),
@@ -86,8 +85,6 @@ export const useDatePicker = ({
     setSelectedDate(newDate);
     setIsOpen(false);
     onChange?.(newDate);
-
-    // console.log()
   };
 
   const renderCalendarDays = useCallback(() => {

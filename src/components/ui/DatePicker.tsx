@@ -4,30 +4,49 @@ import { useDatePicker } from "@/hooks/useDatePicker";
 
 interface DatePickerProps {
   label?: string;
-  defaultValue?: string;
+  defaultValue?: Date | string;
   disabled?: boolean;
   fullWidth?: boolean;
-  onChange?: (date: Date) => void;
+  onChange?: (date: string) => void; 
   name?: string;
-  value?: Date;
+  value?: string | Date;
 }
 
 const DatePicker: React.FC<DatePickerProps> = ({
   label = "Issue Date",
-  defaultValue = new Date("2021-07-21").toISOString(),
+  defaultValue,
   disabled = false,
   fullWidth = false,
   onChange,
   name,
   value,
 }) => {
-  const normalizedDefaultValue =
-    typeof defaultValue === "string" ? new Date(defaultValue) : defaultValue;
-  const safeDefaultDate = isNaN(normalizedDefaultValue.getTime())
-    ? new Date()
-    : normalizedDefaultValue;
+  const stringToDate = (dateValue?: string | Date): Date => {
+    if (!dateValue) return new Date();
+    
+    if (typeof dateValue === 'string') {
+      const cleanDate = dateValue.split('T')[0];
+      const [year, month, day] = cleanDate.split('-').map(Number);
+      return new Date(year, month - 1, day);
+    }
+    return dateValue;
+  };
 
-  const initialDate = value || safeDefaultDate;
+  const dateToString = (date: Date): string => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  const initialDate = stringToDate(value || defaultValue);
+
+  const handleDateChange = (date: Date) => {
+    if (onChange) {
+      const dateString = dateToString(date);
+      onChange(dateString);
+    }
+  };
 
   const {
     isOpen,
@@ -43,26 +62,18 @@ const DatePicker: React.FC<DatePickerProps> = ({
     handleNextMonth,
     handleDateSelect,
     renderCalendarDays,
-  } = useDatePicker({ defaultValue: initialDate, onChange });
+  } = useDatePicker({ 
+    defaultValue: initialDate, 
+    onChange: handleDateChange 
+  });
 
   useEffect(() => {
     if (value) {
-      const valueTime = value.getTime();
-      const selectedTime = selectedDate.getTime();
-
-      if (valueTime !== selectedTime) {
-        setSelectedDate(value);
-        setCurrentMonth(value);
-      }
+      const newDate = stringToDate(value);
+      setSelectedDate(newDate);
+      setCurrentMonth(newDate);
     }
-  }, [value, selectedDate, setSelectedDate, setCurrentMonth]);
-
-  const formatDateForInput = (date: Date) => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
+  }, [value, setSelectedDate, setCurrentMonth]);
 
   return (
     <div
@@ -77,7 +88,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
         <input
           type="hidden"
           name={name}
-          value={formatDateForInput(selectedDate)}
+          value={dateToString(selectedDate)}
         />
       )}
 
@@ -140,7 +151,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
                 />
               ) : (
                 <button
-                  key={`${currentMonth.getMonth()}-${day}-${index}`}
+                  key={day}
                   type="button"
                   className={`heading-s-v datepicker__day ${
                     selectedDate.getDate() === day &&
