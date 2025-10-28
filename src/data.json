@@ -1,9 +1,9 @@
 {
   "invoices": [
     {
-      "createdAt": "Invalid Date",
+      "createdAt": "28 Oct 2025",
       "description": "Re-branding",
-      "paymentDue": "Invalid Date",
+      "paymentDue": "4 Nov 2025",
       "senderAddress": {
         "street": "19 Union Terrace",
         "city": "London",
@@ -69,9 +69,9 @@
       "total": 6155.91
     },
     {
-      "createdAt": "2025-12-30T23:00:00.000Z",
+      "createdAt": "28 Oct 2025",
       "description": "Logo Re-design",
-      "paymentDue": "Invalid Date",
+      "paymentDue": "11 Nov 2025",
       "senderAddress": {
         "street": "N165 Federal Low-cost Housing Estate. North Bank, Makurdi",
         "city": "Makurdi",
@@ -100,9 +100,9 @@
       "id": "FV2353"
     },
     {
-      "createdAt": "Invalid Date",
+      "createdAt": "28 Oct 2025",
       "description": "John's Designs",
-      "paymentDue": "Invalid Date",
+      "paymentDue": "11 Nov 2025",
       "senderAddress": {
         "street": "N165 Federal Low-cost Housing Estate. North Bank, Makurdi",
         "city": "Makurdi",
@@ -131,9 +131,9 @@
       "id": "YR0IE4"
     },
     {
+      "createdAt": "28 Oct 2025",
       "description": "John's Vision",
-      "createdAt": "2025-12-30T23:00:00.000Z",
-      "paymentDue": "Invalid Date",
+      "paymentDue": "27 Nov 2025",
       "senderAddress": {
         "street": "Bariga, Lagos",
         "city": "Lagos",
@@ -191,6 +191,68 @@
       ],
       "total": 50,
       "status": "pending"
+    },
+    {
+      "createdAt": "28 Oct 2025",
+      "description": "Home sum",
+      "paymentDue": "27 Nov 2025",
+      "senderAddress": {
+        "street": "Christ Anglican Church Abule Okuta Road Bariga Shomolu",
+        "city": "SOMOLU",
+        "postCode": "100223",
+        "country": "Nigeria"
+      },
+      "clientName": "Julies Home",
+      "clientEmail": "reubenvickie20@gmail.com",
+      "clientAddress": {
+        "street": "N165 Federal Low-cost Housing Estate. North Bank, Makurdi",
+        "city": "Shomulu",
+        "postCode": "100223",
+        "country": "Nigeria"
+      },
+      "paymentTerms": 30,
+      "items": [
+        {
+          "name": "Rattys",
+          "quantity": 1,
+          "price": 1999,
+          "total": 1999
+        }
+      ],
+      "total": 1999,
+      "status": "pending",
+      "id": "S4R0JO"
+    },
+    {
+      "createdAt": "28 Oct 2025",
+      "description": "John's world",
+      "paymentDue": "27 Nov 2025",
+      "senderAddress": {
+        "street": "Bariga, Lagos",
+        "city": "Lagos",
+        "postCode": "970101",
+        "country": "Nigeria"
+      },
+      "clientName": "Derrick Will",
+      "clientEmail": "reubenvickie20@gmail.com",
+      "clientAddress": {
+        "street": "Christ Anglican Church Abule Okuta Road Bariga Shomolu",
+        "city": "SOMOLU",
+        "postCode": "100223",
+        "country": "Nigeria"
+      },
+      "paymentTerms": 30,
+      "items": [
+        {
+          "name": "Homage",
+          "quantity": 1,
+          "price": 10,
+          "total": 10
+        }
+      ],
+      "total": 10,
+      "status": "pending",
+      "id": "SK604K"
     }
   ]
 }

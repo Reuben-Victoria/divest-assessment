@@ -15,7 +15,7 @@ import {
   DatePicker,
   Dropdown,
 } from "@/components";
-import { toInvoiceFormData } from "@/utils/formatter";
+import { normalizeDate, toInvoiceFormData } from "@/utils/formatter";
 
 interface InvoiceFormModalProps {
   mode: "create" | "edit";
@@ -278,7 +278,7 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({
                   fullWidth
                   name="invoiceDate"
                   label="Invoice Date"
-                  defaultValue={new Date(formData?.invoiceDate as string)}
+                  defaultValue={normalizeDate(formData?.invoiceDate as string)}
                   value={
                     typeof formData.invoiceDate === "string"
                       ? new Date(formData.invoiceDate)

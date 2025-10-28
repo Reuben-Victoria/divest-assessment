@@ -4,7 +4,7 @@ import { useDatePicker } from "@/hooks/useDatePicker";
 
 interface DatePickerProps {
   label?: string;
-  defaultValue?: Date;
+  defaultValue?: string;
   disabled?: boolean;
   fullWidth?: boolean;
   onChange?: (date: Date) => void;
@@ -14,7 +14,7 @@ interface DatePickerProps {
 
 const DatePicker: React.FC<DatePickerProps> = ({
   label = "Issue Date",
-  defaultValue = new Date("2021-07-21"),
+  defaultValue = new Date("2021-07-21").toISOString(),
   disabled = false,
   fullWidth = false,
   onChange,

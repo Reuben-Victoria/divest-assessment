@@ -1,5 +1,6 @@
 "use client";
 import Loader from "../shared/Loader";
+import { normalizeDate } from "@/utils/formatter";
 import { useMemo, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { StatusBadge, Button, RenderIf } from "@/components";
@@ -69,7 +70,7 @@ const InvoiceDetail = () => {
       id: invoice?.id as string,
       invoice: {
         ...editData,
-        id: invoice?.id
+        id: invoice?.id,
       },
     });
     return;

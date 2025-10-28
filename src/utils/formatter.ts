@@ -22,9 +22,135 @@ export const formatDate = (dateString: string, locale = "en-GB"): string => {
   }).format(date);
 };
 
+export const normalizeDate = (date: string | Date | undefined): string => {
+  if (!date) {
+    return new Date().toISOString().split("T")[0];
+  }
+
+  let dateObj: Date;
+
+  if (typeof date === "string") {
+    if (/^\d{1,2}\s\w{3,9}\s\d{4}$/.test(date)) {
+      const months: { [key: string]: number } = {
+        Jan: 0,
+        Feb: 1,
+        Mar: 2,
+        Apr: 3,
+        May: 4,
+        Jun: 5,
+        Jul: 6,
+        Aug: 7,
+        Sep: 8,
+        Oct: 9,
+        Nov: 10,
+        Dec: 11,
+      };
+
+      const parts = date.split(" ");
+      const day = parseInt(parts[0], 10);
+      const month = months[parts[1]];
+      const year = parseInt(parts[2], 10);
+
+      dateObj = new Date(year, month, day);
+    } else if (date.includes("T")) {
+      dateObj = new Date(date);
+    } else if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      dateObj = new Date(date + "T00:00:00");
+    } else {
+      dateObj = new Date(date);
+    }
+  } else {
+    dateObj = date;
+  }
+
+  if (isNaN(dateObj.getTime())) {
+    console.warn("Invalid date:", date, "- using current date");
+    dateObj = new Date();
+  }
+
+  const year = dateObj.getFullYear();
+  const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+  const day = String(dateObj.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
+
+const parseDayMonthYearFormat = (dateString: string): Date => {
+  const months: { [key: string]: number } = {
+    Jan: 0,
+    January: 0,
+    Feb: 1,
+    February: 1,
+    Mar: 2,
+    March: 2,
+    Apr: 3,
+    April: 3,
+    May: 4,
+    Jun: 5,
+    June: 5,
+    Jul: 6,
+    July: 6,
+    Aug: 7,
+    August: 7,
+    Sep: 8,
+    September: 8,
+    Oct: 9,
+    October: 9,
+    Nov: 10,
+    November: 10,
+    Dec: 11,
+    December: 11,
+  };
+
+  const parts = dateString.split(" ");
+  const day = parseInt(parts[0], 10);
+  const month = months[parts[1]];
+  const year = parseInt(parts[2], 10);
+
+  return new Date(year, month, day);
+};
+
+export const formatDateForDisplay = (dateString: string): string => {
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) return "";
+
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+
+  return `${day} ${month} ${year}`;
+};
+
+export const formatDateForAPI = (dateString: string): string => {
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) return "";
+
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+
+  return `${day}/${month}/${year}`;
+};
+
 export function toInvoiceFormData(flatData: Record<string, any>) {
+  const normalizedInvoiceDate = normalizeDate(flatData.invoiceDate);
   return {
-    createdAt: new Date(flatData.invoiceDate).toLocaleDateString("en-GB"),
+    createdAt: formatDateForDisplay(normalizedInvoiceDate),
     description: flatData.description,
     paymentDue: calculatePaymentDue(
       flatData.invoiceDate,
