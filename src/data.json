@@ -157,6 +157,37 @@
       "total": 30,
       "status": "paid",
       "id": "8UEJN9"
+    },
+    {
+      "id": "AX00D7",
+      "createdAt": "2025-12-30T23:00:00.000Z",
+      "description": "Artificial Intelligence",
+      "paymentDue": "07 Jan 2026",
+      "senderAddress": {
+        "street": "N165 Federal Low-cost Housing Estate. North Bank, Makurdi",
+        "city": "Makurdi",
+        "postCode": "970101",
+        "country": "Nigeria"
+      },
+      "clientName": "John Doe",
+      "clientEmail": "reubenvickie20@gmail.com",
+      "clientAddress": {
+        "street": "Christ Anglican Church Abule Okuta Road Bariga Shomolu",
+        "city": "SOMOLU",
+        "postCode": "970101",
+        "country": "Nigeria"
+      },
+      "paymentTerms": 7,
+      "items": [
+        {
+          "name": "Meta Glass",
+          "quantity": 1,
+          "price": 50,
+          "total": 50
+        }
+      ],
+      "total": 50,
+      "status": "pending"
     }
   ]
 }
