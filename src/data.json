@@ -38,26 +38,24 @@
       "id": "AA1449"
     },
     {
-      "id": "TY9141",
-      "createdAt": "2025-12-30T23:00:00.000Z",
-      "paymentDue": "2021-10-31",
+      "createdAt": "28 Oct 2025",
       "description": "Landing Page Design",
-      "paymentTerms": 30,
-      "clientName": "Thomas Wayne",
-      "clientEmail": "thomas@dc.com",
-      "status": "paid",
+      "paymentDue": "27 Nov 2025",
       "senderAddress": {
         "street": "19 Union Terrace",
         "city": "London",
         "postCode": "E1 3EZ",
         "country": "United Kingdom"
       },
+      "clientName": "Thomas Wayne",
+      "clientEmail": "thomas@dc.com",
       "clientAddress": {
         "street": "3964  Queens Lane",
         "city": "Gotham",
         "postCode": "60457",
         "country": "United States of America"
       },
+      "paymentTerms": 30,
       "items": [
         {
           "name": "Web Design",
@@ -66,7 +64,9 @@
           "total": 6155.91
         }
       ],
-      "total": 6155.91
+      "total": 6155.91,
+      "status": "paid",
+      "id": "TY9141"
     },
     {
       "createdAt": "28 Oct 2025",
@@ -162,10 +162,9 @@
       "id": "8UEJN9"
     },
     {
-      "id": "AX00D7",
-      "createdAt": "2025-12-30T23:00:00.000Z",
+      "createdAt": "28 Oct 2025",
       "description": "Artificial Intelligence",
-      "paymentDue": "07 Jan 2026",
+      "paymentDue": "4 Nov 2025",
       "senderAddress": {
         "street": "N165 Federal Low-cost Housing Estate. North Bank, Makurdi",
         "city": "Makurdi",
@@ -190,7 +189,8 @@
         }
       ],
       "total": 50,
-      "status": "pending"
+      "status": "pending",
+      "id": "AX00D7"
     },
     {
       "createdAt": "28 Oct 2025",
