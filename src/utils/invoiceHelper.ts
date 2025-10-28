@@ -1,8 +1,8 @@
 import { InvoiceFormData, InvoiceItem } from "@/types";
 export const getEmptyInvoiceForm = (): InvoiceFormData => ({
   id: "",
-  createdAt: new Date().toISOString(),
-  invoiceDate: new Date().toISOString(),
+  createdAt: undefined,
+  invoiceDate: undefined,
   paymentDue: "",
   description: "",
   paymentTerms: 30,
@@ -50,9 +50,5 @@ export const calculatePaymentDue = (
 ): string => {
   const date = new Date(invoiceDate);
   date.setDate(date.getDate() + paymentTerms);
-  return date.toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
+  return date.toLocaleDateString("en-GB");
 };

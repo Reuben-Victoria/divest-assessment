@@ -19,7 +19,7 @@ export const useInvoiceForm = (initialData: InvoiceFormData) => {
     clientCity: formData.clientAddress.city,
     clientPostCode: formData.clientAddress.postCode,
     clientCountry: formData.clientAddress.country,
-    invoiceDate: formData?.invoiceDate,
+    invoiceDate: formData?.invoiceDate || formData?.createdAt,
     paymentTerms: formData.paymentTerms,
     description: formData.description,
     items: formData.items,
@@ -69,20 +69,20 @@ export const useInvoiceForm = (initialData: InvoiceFormData) => {
     field: K,
     value: InvoiceFormData[T][K]
   ): void => {
-    console.log("handleAddressChange called:", { type, field, value });
-    console.log("Previous formData:", formData);
-
-    setFormData((prev) => {
-      const newData = {
-        ...prev,
-        [type]: {
-          ...prev[type],
-          [field]: value,
-        },
-      };
-      console.log("New formData:", newData);
-      return newData;
-    });
+   console.log("handleAddressChange called:", { type, field, value });
+  console.log("Previous formData:", formData);
+  
+  setFormData((prev) => {
+    const newData = {
+      ...prev,
+      [type]: {
+        ...prev[type],
+        [field]: value,
+      },
+    };
+    console.log("New formData:", newData);
+    return newData;
+  });
 
     const errorKey =
       type === "senderAddress"
@@ -91,6 +91,7 @@ export const useInvoiceForm = (initialData: InvoiceFormData) => {
 
     clearError(errorKey);
   };
+
 
   const handleItemChange = <K extends keyof InvoiceItem>(
     index: number,

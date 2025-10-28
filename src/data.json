@@ -1,6 +1,7 @@
 {
   "invoices": [
     {
+      "createdAt": "Invalid Date",
       "description": "Re-branding",
       "paymentDue": "Invalid Date",
       "senderAddress": {
@@ -38,7 +39,7 @@
     },
     {
       "id": "TY9141",
-      "createdAt": "2021-10-01",
+      "createdAt": "2025-12-30T23:00:00.000Z",
       "paymentDue": "2021-10-31",
       "description": "Landing Page Design",
       "paymentTerms": 30,
@@ -68,7 +69,7 @@
       "total": 6155.91
     },
     {
-      "createdAt": "NaN-NaN-NaN",
+      "createdAt": "2025-12-30T23:00:00.000Z",
       "description": "Logo Re-design",
       "paymentDue": "Invalid Date",
       "senderAddress": {
@@ -99,6 +100,7 @@
       "id": "FV2353"
     },
     {
+      "createdAt": "Invalid Date",
       "description": "John's Designs",
       "paymentDue": "Invalid Date",
       "senderAddress": {
@@ -130,6 +132,7 @@
     },
     {
       "description": "John's Vision",
+      "createdAt": "2025-12-30T23:00:00.000Z",
       "paymentDue": "Invalid Date",
       "senderAddress": {
         "street": "Bariga, Lagos",

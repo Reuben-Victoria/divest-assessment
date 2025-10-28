@@ -23,10 +23,8 @@ export const formatDate = (dateString: string, locale = "en-GB"): string => {
 };
 
 export function toInvoiceFormData(flatData: Record<string, any>) {
-
-    console.log(flatData.invoiceDate, "SHSH")
   return {
-    createdAt: flatData.invoiceDate,
+    createdAt: new Date(flatData.invoiceDate).toLocaleDateString("en-GB"),
     description: flatData.description,
     paymentDue: calculatePaymentDue(
       flatData.invoiceDate,
