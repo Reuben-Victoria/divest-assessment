@@ -11,6 +11,8 @@
   border: 1px solid var(--card-border);
   border-radius: 8px;
   cursor: pointer;
+  text-wrap: no-wrap;
+  white-space: nowrap;
   transition: border-color 0.2s ease;
 
   &:hover {
@@ -38,6 +40,8 @@
     font-size: 13px;
     font-weight: 500;
     justify-self: start;
+    overflow: hidden;
+    text-overflow: ellipsis;
     color: var(--text-secondary);
   }
 

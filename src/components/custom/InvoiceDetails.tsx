@@ -1,4 +1,5 @@
 "use client";
+import Loader from "../shared/Loader";
 import { useMemo, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { StatusBadge, Button, RenderIf } from "@/components";
@@ -23,7 +24,7 @@ const InvoiceDetail = () => {
   const router = useRouter();
   const { id } = useParams();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const { data } = useGetInvoiceById({ id: id as string });
+  const { data, isPending } = useGetInvoiceById({ id: id as string });
 
   const { mutate: deleteInvoice, isPending: isDeleting } = useDeleteInvoice(
     () => router.push("/")
@@ -37,8 +38,6 @@ const InvoiceDetail = () => {
     useUpdateInvoiceStatus();
 
   const invoice = useMemo(() => data, [data]);
-
-  console.log(data);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const handleGoBack = () => {
@@ -67,7 +66,7 @@ const InvoiceDetail = () => {
   const handleSaveEdit = (updatedInvoice: Partial<InvoiceFormData>) => {
     const editData = toInvoiceFormData(updatedInvoice);
 
-    console.log(editData, "EDIT DATE")
+    console.log(editData, "EDIT DATE");
     updateInvoice({
       id: invoice?.id as string,
       invoice: {
@@ -110,97 +109,104 @@ const InvoiceDetail = () => {
           </div>
         </div>
 
-        <div className="invoice-detail__content">
-          <div className="invoice-detail__header">
-            <div className="invoice-detail__header-left">
-              <h2 className="invoice-detail__id">
-                <span className="invoice-detail__hash">#</span>
-                {invoice?.id}
-              </h2>
-              <p className="invoice-detail__description">
-                {invoice?.description}
-              </p>
-            </div>
-            <div className="invoice-detail__sender-address">
-              <p>{invoice?.senderAddress?.street}</p>
-              <p>{invoice?.senderAddress?.city}</p>
-              <p>{invoice?.senderAddress?.postCode}</p>
-              <p>{invoice?.senderAddress?.country}</p>
-            </div>
-          </div>
-
-          <div className="invoice-detail__info">
-            <div className="invoice-detail__info-group">
-              <div className="invoice-detail__info-item">
-                <label>Invoice Date</label>
-                <p className="invoice-detail__info-value">
-                  {invoice?.createdAt}
+        <RenderIf condition={!isPending}>
+          <div className="invoice-detail__content">
+            <div className="invoice-detail__header">
+              <div className="invoice-detail__header-left">
+                <h2 className="invoice-detail__id">
+                  <span className="invoice-detail__hash">#</span>
+                  {invoice?.id}
+                </h2>
+                <p className="invoice-detail__description">
+                  {invoice?.description}
                 </p>
               </div>
-              <div className="invoice-detail__info-item">
-                <label>Payment Due</label>
-                <p className="invoice-detail__info-value">
-                  {invoice?.paymentDue}
-                </p>
+              <div className="invoice-detail__sender-address">
+                <p>{invoice?.senderAddress?.street}</p>
+                <p>{invoice?.senderAddress?.city}</p>
+                <p>{invoice?.senderAddress?.postCode}</p>
+                <p>{invoice?.senderAddress?.country}</p>
               </div>
             </div>
 
-            <div className="invoice-detail__info-group">
-              <div className="invoice-detail__info-item">
-                <label>Bill To</label>
-                <p className="invoice-detail__info-value">
-                  {invoice?.clientName}
-                </p>
-                <div className="invoice-detail__client-address">
-                  <p>{invoice?.clientAddress?.street}</p>
-                  <p>{invoice?.clientAddress?.city}</p>
-                  <p>{invoice?.clientAddress?.postCode}</p>
-                  <p>{invoice?.clientAddress?.country}</p>
+            <div className="invoice-detail__info">
+              <div className="invoice-detail__info-group">
+                <div className="invoice-detail__info-item">
+                  <label>Invoice Date</label>
+                  <p className="invoice-detail__info-value">
+                    {invoice?.createdAt}
+                  </p>
+                </div>
+                <div className="invoice-detail__info-item">
+                  <label>Payment Due</label>
+                  <p className="invoice-detail__info-value">
+                    {invoice?.paymentDue}
+                  </p>
+                </div>
+              </div>
+
+              <div className="invoice-detail__info-group">
+                <div className="invoice-detail__info-item">
+                  <label>Bill To</label>
+                  <p className="invoice-detail__info-value">
+                    {invoice?.clientName}
+                  </p>
+                  <div className="invoice-detail__client-address">
+                    <p>{invoice?.clientAddress?.street}</p>
+                    <p>{invoice?.clientAddress?.city}</p>
+                    <p>{invoice?.clientAddress?.postCode}</p>
+                    <p>{invoice?.clientAddress?.country}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="invoice-detail__info-group">
+                <div className="invoice-detail__info-item">
+                  <label>Sent to</label>
+                  <p className="invoice-detail__info-value">
+                    {invoice?.clientEmail}
+                  </p>
                 </div>
               </div>
             </div>
 
-            <div className="invoice-detail__info-group">
-              <div className="invoice-detail__info-item">
-                <label>Sent to</label>
-                <p className="invoice-detail__info-value">
-                  {invoice?.clientEmail}
-                </p>
+            <div className="invoice-detail__items">
+              <div className="invoice-detail__items-header">
+                <span>Item Name</span>
+                <span className="invoice-detail__items-qty">QTY.</span>
+                <span className="invoice-detail__items-price">Price</span>
+                <span className="invoice-detail__items-total">Total</span>
+              </div>
+
+              {invoice?.items?.map((item, index) => (
+                <div key={index} className="invoice-detail__item">
+                  <span className="invoice-detail__item-name">
+                    {item?.name}
+                  </span>
+                  <span className="invoice-detail__item-qty">
+                    {item?.quantity}
+                  </span>
+                  <span className="invoice-detail__item-price">
+                    £ {item?.price.toFixed(2)}
+                  </span>
+                  <span className="invoice-detail__item-total">
+                    £ {item?.total.toFixed(2)}
+                  </span>
+                </div>
+              ))}
+
+              <div className="invoice-detail__amount-due">
+                <span>Amount Due</span>
+                <span className="invoice-detail__amount-value">
+                  £ {invoice?.total?.toFixed(2)}
+                </span>
               </div>
             </div>
           </div>
-
-          <div className="invoice-detail__items">
-            <div className="invoice-detail__items-header">
-              <span>Item Name</span>
-              <span className="invoice-detail__items-qty">QTY.</span>
-              <span className="invoice-detail__items-price">Price</span>
-              <span className="invoice-detail__items-total">Total</span>
-            </div>
-
-            {invoice?.items?.map((item, index) => (
-              <div key={index} className="invoice-detail__item">
-                <span className="invoice-detail__item-name">{item?.name}</span>
-                <span className="invoice-detail__item-qty">
-                  {item?.quantity}
-                </span>
-                <span className="invoice-detail__item-price">
-                  £ {item?.price.toFixed(2)}
-                </span>
-                <span className="invoice-detail__item-total">
-                  £ {item?.total.toFixed(2)}
-                </span>
-              </div>
-            ))}
-
-            <div className="invoice-detail__amount-due">
-              <span>Amount Due</span>
-              <span className="invoice-detail__amount-value">
-                £ {invoice?.total?.toFixed(2)}
-              </span>
-            </div>
-          </div>
-        </div>
+        </RenderIf>
+        <RenderIf condition={isPending}>
+          <Loader />
+        </RenderIf>
 
         <div className="invoice-detail__actions-mobile">
           <Button variant="secondary" onClick={handleEdit}>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 interface CheckboxOption {
   value: string;
@@ -25,6 +25,27 @@ const FilterCheckbox: React.FC<FilterCheckboxProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [options, setOptions] = useState<CheckboxOption[]>(initialOptions);
+  const filterRef = useRef<HTMLDivElement>(null);
+
+  // Click outside to close
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        filterRef.current &&
+        !filterRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
 
   const handleCheckboxChange = (value: string) => {
     const updatedOptions = options.map((option) =>
@@ -42,7 +63,7 @@ const FilterCheckbox: React.FC<FilterCheckboxProps> = ({
   };
 
   return (
-    <div className="filter-checkbox">
+    <div className="filter-checkbox" ref={filterRef}>
       <button
         type="button"
         className={`filter-checkbox__trigger heading-s-v ${

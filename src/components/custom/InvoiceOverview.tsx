@@ -7,12 +7,13 @@ import InvoiceFormModal from "./InvoiceFormModal";
 import { useGetAllInvoices } from "@/services/hooks/queries/useInvoice";
 import EmptyState from "./EmptyState";
 import { useCreateInvoice } from "@/services/hooks/mutations/useInvoice";
+import Loader from "../shared/Loader";
 
 const InvoicesPage = () => {
   const [filters, setFilters] = useState<string[]>([]);
   const [isAddInvoiceModalOpen, setIsAddInvoiceModalOpen] = useState(false);
   const router = useRouter();
-  const { data } = useGetAllInvoices();
+  const { data, isPending } = useGetAllInvoices();
   const { mutate: createInvoice } = useCreateInvoice(() =>
     setIsAddInvoiceModalOpen(false)
   );
@@ -86,8 +87,14 @@ const InvoicesPage = () => {
           ))}
         </RenderIf>
 
-        <RenderIf condition={filteredInvoices?.length === 0}>
+        <RenderIf
+          condition={filteredInvoices?.length === 0 && isPending === false}
+        >
           <EmptyState />
+        </RenderIf>
+
+        <RenderIf condition={isPending}>
+          <Loader />
         </RenderIf>
       </div>
 
