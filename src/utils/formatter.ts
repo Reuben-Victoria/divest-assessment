@@ -167,8 +167,6 @@ export const formatDateForAPI = (dateString: string): string => {
 
 export function toInvoiceFormData(flatData: Record<string, any>) {
   const normalizedInvoiceDate = normalizeDate(flatData.invoiceDate);
-
-  console.log(normalizeDate(flatData.invoiceDate))
   return {
     createdAt: formatDateForDisplay(normalizedInvoiceDate),
     description: flatData.description,
